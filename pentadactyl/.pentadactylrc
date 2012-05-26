@@ -1,0 +1,39 @@
+" #################################################################################
+" # .pentadactylrc - pentadactyl configuration
+" #
+" # author: mutantmonkey <mutantmonkey@gmail.com>
+" ################################################################################
+
+" Set color scheme
+colors zenburn
+
+" Passkeys {{{
+
+	" Gmail
+	set passkeys+="mail\.google\.com":jkg#
+
+	" Google Calendar
+	set passkeys+="https://www\.google\.com/calendar":jkg12345qc
+
+	" reddit
+	"set passkeys+="www\.reddit\.com":achijklsxz<Return>
+
+	" Twitter
+	set passkeys+="twitter\.com":jkg/?.m
+
+	" DuckDuckGo
+	set passkeys+="duckduckgo\.com":hjk<Return>
+
+	" }}}
+
+	" Quickmarks {{{
+		silent qmark p https://plus.google.com
+		silent qmark r reason.com
+		silent qmark t https://twitter.com
+		" }}}
+
+		" Remap scroll keys
+		"nnoremap j 5j
+		"nnoremap k 5k
+		"nnoremap l 5l
+		"nnoremap h 5h
