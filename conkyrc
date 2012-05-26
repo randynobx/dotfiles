@@ -1,0 +1,17 @@
+################################################################################
+# /home/mutantmonkey/.config/dzen/conkyrc - Conky/home/mutantmonkey/.configuration for Dzen
+#
+# author: mutantmonkey <mutantmonkey@mail.com>
+# modified: obxhokie
+################################################################################
+
+background no
+out_to_console yes
+out_to_x no
+override_utf8_locale yes
+update_interval 1.0
+total_run_times 0
+mpd_host ::1
+
+TEXT
+${if_mpd_playing}^i(.config/dzen/icons/note.xbm) ${mpd_smart} ${endif}^fg() ${if_up wlan0}^i(.config/dzen/icons/wifi_02.xbm) ${wireless_essid wlan0}${endif}^fg() ${if_match "${battery_short CMB1}" == "C"} ^i(.config/dzen/icons/ac_01.xbm) ${else} ^i(.config/dzen/icons/bat_full_01.xbm) ${endif}${battery_percent CMB1}^fg()  ^i(.config/dzen/icons/spkr_01.xbm) ${mpd_vol}  ^i(.config/dzen/icons/dish.xbm) ${execi 900 weather 24060}^fg()  ^i(.config/dzen/icons/clock.xbm) ${time %a %b %d %H:%M}
