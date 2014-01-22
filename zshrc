@@ -21,6 +21,9 @@ bindkey '^[[A' vi-up-line-or-history
 bindkey '^[[B' vi-down-line-or-history
 bindkey '^R' history-incremental-search-backward
 
+bindkey "^[OF" beginning-of-line
+bindkey "^[OH" end-of-line
+
 #bindkey "\e[1~" beginning-of-line
 #bindkey "\e[4~" end-of-line
 #bindkey "\e[5~" beginning-of-history
@@ -128,7 +131,7 @@ precmd () {print -Pn "\e]0;%n@%m: %~\a"}
     DIR_COLOR=$'%{\e[0;37m%}'
     RESET_COLOR=$'%{\e[0;00m%}'
 
-    export PROMPT="$MAIN_COLOR($USER_COLOR%n@%m$MAIN_COLOR|$DIR_COLOR%~$MAIN_COLOR)$RESET_COLOR%# "
+    export PROMPT="$MAIN_COLOR($RESET_COLOR%!:$USER_COLOR%n@%m$MAIN_COLOR|$DIR_COLOR%1~$MAIN_COLOR)$RESET_COLOR%# "
     export PROMPT2="$MAIN_COLOR... $RESET_COLOR"
 
     # }}}
@@ -164,25 +167,21 @@ precmd () {print -Pn "\e]0;%n@%m: %~\a"}
 
     # Aliases {{{
 
-    alias net_connected='sudo netstat -tuoeewp'
-    alias net_listening='sudo netstat -ntulp'
-	
     alias pacs='pacman -Ss'
-	alias pacq='pacman -Qi'
+    alias pacq='pacman -Qi'
 
-	alias vimless='/usr/share/vim/vim73/macros/less.sh'
+    alias vimless='/usr/share/vim/vim73/macros/less.sh'
 
-	alias rlogin='ssh randy92@rlogin.cs.vt.edu'
-	alias acidburn='ssh randy@acidburn.vtluug.org'
-	alias milton='ssh randy@milton.vtluug.org'
+    alias ll='ls -lh'
+    alias la='ls -ah'
+    alias lla='ls -lah'
+    alias privatize='chmod go-rwx'
 
-	alias newmanh='ssh randy@192.168.1.130'
-	alias kramerh='ssh randy@192.168.1.132'
-	
-	alias mutantmonkey_rsync="ssh -L 8073:gigantea.mutantmonkey.in:873 acidburn.vtluug.org"
-	alias mutantmonkey_web="ssh -L 8080:gigantea.mutantmonkey.in:80 acidburn.vtluug.org"
+    alias tasks='clear;task cal;task long;task summary'
+    #alias pdf='mupdf %s & disown'
 
-	alias wuvt='mplayer -playlist http://www.wuvt.vt.edu/liveplayer/wuvtstream_hi.m3u'
-	alias pdscan='mplayer -playlist http://128.173.84.110:8000/listen.m3u'
-
+    alias strtx='startx&disown;vlock'
+    alias srvce='sudo systemctl'
 	# }}}
+
+    export PATH=$PATH:$HOME/scripts/
