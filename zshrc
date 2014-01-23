@@ -173,8 +173,8 @@ precmd () {print -Pn "\e]0;%n@%m: %~\a"}
     alias vimless='/usr/share/vim/vim73/macros/less.sh'
 
     alias ll='ls -lh'
-    alias la='ls -ah'
-    alias lla='ls -lah'
+    alias la='ls -Ah'
+    alias lla='ls -lAh'
     alias privatize='chmod go-rwx'
 
     alias tasks='clear;task cal;task long;task summary'
