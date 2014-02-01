@@ -127,11 +127,22 @@ precmd () {print -Pn "\e]0;%n@%m: %~\a"}
     # Prompt {{{
 
     MAIN_COLOR=$'%{\e[1;30m%}'
-    USER_COLOR=$'%{\e[1;32m%}'
+    #USER_COLOR=$'%{\e[1;32m%}' ## This line is not necessary as USER_COLOR will be set below depending on current user
+    HOST_COLOR=$'%{\e[1;32m%}'
     DIR_COLOR=$'%{\e[0;37m%}'
     RESET_COLOR=$'%{\e[0;00m%}'
 
-    export PROMPT="$MAIN_COLOR($RESET_COLOR%!:$USER_COLOR%n@%m$MAIN_COLOR|$DIR_COLOR%1~$MAIN_COLOR)$RESET_COLOR%# "
+    randy=1000
+    root=0
+    if [ $(id -u) -eq $randy ]; then
+        USER_COLOR=$'%{\e[1;32m%}'
+    elif [ $(id -u) -eq $root ]; then
+        USER_COLOR=$'%{\e[1;31m%}'
+    else
+        USER_COLOR=$'%{\e[1;33m%}'
+    fi
+
+    export PROMPT="$MAIN_COLOR($RESET_COLOR%!:$USER_COLOR%n$RESET_COLOR@$HOST_COLOR%m$MAIN_COLOR|$DIR_COLOR%1~$MAIN_COLOR)$RESET_COLOR%# "
     export PROMPT2="$MAIN_COLOR... $RESET_COLOR"
 
     # }}}
@@ -157,8 +168,7 @@ precmd () {print -Pn "\e]0;%n@%m: %~\a"}
 
 	# Java settings
 	 export _JAVA_AWT_WM_NONREPARENTING=1
-	 export _JAVA_OPTIONS="-Dawt.useSystemAAFontSettings=lcd_vrgb -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel"
-
+	 export _JAVA_OPTIONS="-Dawt.useSystemAAFontSettings=lcd_vrgb -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel" 
     # keychain
     #eval `keychain -q`
 
@@ -166,7 +176,8 @@ precmd () {print -Pn "\e]0;%n@%m: %~\a"}
 
 
     # Aliases {{{
-
+    alias h='history | tail'
+	
     alias pacs='pacman -Ss'
     alias pacq='pacman -Qi'
 
@@ -178,7 +189,7 @@ precmd () {print -Pn "\e]0;%n@%m: %~\a"}
     alias privatize='chmod go-rwx'
 
     alias tasks='clear;task cal;task long;task summary'
-    #alias pdf='mupdf %s & disown'
+    alias pdf='mupdf %s & disown'
 
     alias strtx='startx&disown;vlock'
     alias srvce='sudo systemctl'
