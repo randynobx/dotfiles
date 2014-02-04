@@ -282,7 +282,7 @@ exec smartbg /home/randy/pictures/wallpapers/3d_city.jpg
 # finds out, if available)
 
 bar {
-    output          LVDS1
+#    output          LVDS1
     status_command  i3status --config ~/.i3/i3status.conf
     position        bottom
     workspace_buttons   yes
