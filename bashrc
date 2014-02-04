@@ -13,7 +13,7 @@ PINK="\[\033[01;35m\]"
 TEAL="\[\033[01;36m\]"
 WHITE="\[\033[01;37m\]"
 
-if [ "${ID}" == "${randy}" ] ; then
+if [ "${ID}" == ${randy} ] ; then
     COLOR=${GREEN}
 else if [ "${ID}" == "${ROOT}" ] ; then
     COLOR=${RED}
@@ -21,7 +21,7 @@ else
     COLOR=${YELLOW}
 fi fi
 
-export PS1="${COLOR}${COLOR}\u${OFF}@${TEAL}\h${OFF}:\W${COLOR}\$ ${OFF} "
+export PS1="\!:${COLOR}\u${OFF}@${TEAL}\h${OFF}:\W${COLOR}\$${OFF} "
 ### End Prompt ###
 
 export HISTSIZE=99999
@@ -41,7 +41,9 @@ alias ls='ls --color=auto '
 alias grep='grep --color=auto '
 
 ### Aliases ###
-alias h='history 25'
+alias h='history'
+alias j='jobs'
+alias p='pinky'
 alias ls='ls -F'
 alias ll='ls -lF'
 alias la='ls -AF'

@@ -128,21 +128,21 @@ precmd () {print -Pn "\e]0;%n@%m: %~\a"}
 
     MAIN_COLOR=$'%{\e[1;30m%}'
     #USER_COLOR=$'%{\e[1;32m%}' ## This line is not necessary as USER_COLOR will be set below depending on current user
-    HOST_COLOR=$'%{\e[1;32m%}'
+    HOST_COLOR=$'%{\e[1;36m%}'
     DIR_COLOR=$'%{\e[0;37m%}'
     RESET_COLOR=$'%{\e[0;00m%}'
 
     randy=1000
     root=0
-    if [ $(id -u) -eq $randy ]; then
+    if [ $(id -u) -eq $randy ]; then    # Green if user is randy
         USER_COLOR=$'%{\e[1;32m%}'
-    elif [ $(id -u) -eq $root ]; then
+    elif [ $(id -u) -eq $root ]; then   # Red if user is root
         USER_COLOR=$'%{\e[1;31m%}'
-    else
+    else                                # Yellow if user is anyone else
         USER_COLOR=$'%{\e[1;33m%}'
     fi
 
-    export PROMPT="$MAIN_COLOR($RESET_COLOR%!:$USER_COLOR%n$RESET_COLOR@$HOST_COLOR%m$MAIN_COLOR|$DIR_COLOR%1~$MAIN_COLOR)$RESET_COLOR%# "
+    export PROMPT="$MAIN_COLOR($RESET_COLOR%!:$USER_COLOR%n$RESET_COLOR@$HOST_COLOR%m$MAIN_COLOR|$DIR_COLOR%1~$MAIN_COLOR)$USER_COLOR%#$RESET_COLOR "
     export PROMPT2="$MAIN_COLOR... $RESET_COLOR"
 
     # }}}
@@ -176,12 +176,11 @@ precmd () {print -Pn "\e]0;%n@%m: %~\a"}
 
 
     # Aliases {{{
-    alias h='history | tail'
-	
-    alias pacs='pacman -Ss'
-    alias pacq='pacman -Qi'
+    alias h='history'
+    alias j='jobs'
+    alias p='pinky'
 
-    alias vimless='/usr/share/vim/vim73/macros/less.sh'
+    alias vimless='/usr/share/vim/vim74/macros/less.sh'
 
     alias ll='ls -lh'
     alias la='ls -Ah'
@@ -192,7 +191,19 @@ precmd () {print -Pn "\e]0;%n@%m: %~\a"}
     alias pdf='mupdf %s & disown'
 
     alias strtx='startx&disown;vlock'
-    alias srvce='sudo systemctl'
+    alias srvc='sudo systemctl'
+
+    ## Arch Linux pacman aliases
+    alias pacs='pacman -Ss'
+    alias pacq='pacman -Qi'
+    alias paci='sudo pacman -S'
+    alias pacu='sudo pacman -Syu'
+
+    ## Cower aliases
+    alias cows='cower -s'
+    alias cowd='cower =d'
+
+
 	# }}}
 
     export PATH=$PATH:$HOME/scripts/
