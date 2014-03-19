@@ -22,23 +22,27 @@ set $ws8 8
 set $ws9 9
 set $ws10 10:trans
 
+# Monitor var
+set $mon0 HDMI-0
+set $mon1 VGA-0
+
 
 
 ###############################################
 # Multi-Monitor setup
 ###############################################
 
-#$ws1 output HDMI-0
-#$ws2 output VGA-0
-#$ws3 output HDMI-0
-#$ws4 output HDMI-0
-#$ws5 output HDMI-0
+#workspace $ws1 output $mon0
+#workspace $ws2 output $mon1
+#workspace $ws3 output $mon0
+#workspace $ws4 output $mon0
+#workspace $ws5 output $mon0
 
-#$ws6 output VGA-0
-#$ws7 output VGA-0
-#$ws8 output VGA-0
-#$ws9 output VGA-0
-#$ws10 output VGA-0
+#workspace $ws6 output $mon1
+#workspace $ws7 output $mon1
+#workspace $ws8 output $mon1
+#workspace $ws9 output $mon1
+#workspace $ws10 output $mon1
 
 ###############################################
 
@@ -58,16 +62,23 @@ set $ws10 10:trans
  for_window [class="MPlayer"] border 1pixel
  for_window [class="sxiv"] border 1pixel
  for_window [class="xournal"] border 1pixel
+ for_window [class="Zathura"] border 1pixel
  for_window [class="mupdf"] border 1pixel
  for_window [title="mplayer2"] border 1pixel
  for_window [class="Roxterm"] border 1pixel
+ for_window [class="Sakura"] border 1pixel
  for_window [title="Steam"] border 1pixel
+ for_window [class="Thunderbird"] border 1pixel
+ for_window [class="Virt-manager"] border 1pixel
+
  for_window [title="Calculator"] floating enable
  for_window [class="sxiv"] floating enable
  for_window [title="Mixer"] floating enable
  for_window [title="mplayer2"] floating enable
  for_window [title="Steam"] floating enable
  for_window [title="pdfedit"] floating enable
+
+ for_window [window_role="pop-up"] floating enable
 
  # Colors {{{
 
@@ -82,8 +93,8 @@ set $ws10 10:trans
  # }}}
 
 # assign programs to specific workspaces
-assign [class="Firefox"] $ws2
-assign [class="Transmission"] $ws10
+assign [class="Firefox"] 2:www
+assign [class="Transmission"] 10:trans
 
 # font for window titles. ISO 10646 = Unicode
 font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
@@ -101,12 +112,12 @@ bindsym $mod+o scratchpad show
 # screenshot with PrintScrn
 bindsym Print exec /usr/bin/scrot
 
-# lock screen with i3lock
-bindsym Ctrl+$mod+l exec i3lock #-i /home/randy/pictures/lockscreen.png
+# lock screen with i3lock [-d to disable screen on lock] [-i for custom bg image]
+bindsym Ctrl+$mod+l exec i3lock -d #-i /home/randy/pictures/lockscreen.png
 
 # start a terminal
-bindsym $mod+Return exec roxterm
-#bindsym $mod+Return exec sakura
+#bindsym $mod+Return exec roxterm
+bindsym $mod+Return exec sakura
 
 # kill focused window
 bindsym $mod+Shift+Q kill
@@ -276,20 +287,22 @@ exec /home/randy/double_screen.sh
 exec xmodmap ~/compose_keymap
 
 # Set wallpaper
-exec feh --bg-scale /home/randy/pictures/wallpapers/3d_city.jpg
+exec smartbg /home/randy/pictures/wallpapers/3d_city.jpg
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 
 bar {
-#    output          LVDS1
+    output          LVDS1
     status_command  i3status --config ~/.i3/i3status.conf
     position        bottom
     workspace_buttons   yes
-    tray_output output
+    tray_output primary
 }
 
 exec i3status -c .i3/i3status.conf | i3bar -d
 #exec conky -c /home/randy/.conkyrc | dzen2 -fn 'DejaVu Sans Mono-9' -ta r -dock -xs 1
 #exec conky -c /home/randy/.conkyrc | i3-wsbar -c "dzen2 -x %x -dock"
 
+exec feh --bg-scale ~/mountains_wallpaper.jpg
+exec xcompmgr -o 80 & disown
