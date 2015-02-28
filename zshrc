@@ -166,9 +166,9 @@ precmd () {print -Pn "\e]0;%n@%m: %~\a"}
     export TERM=screen-256color
     fi
 
-	# Java settings
-	 export _JAVA_AWT_WM_NONREPARENTING=1
-	 export _JAVA_OPTIONS="-Dawt.useSystemAAFontSettings=lcd_vrgb -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel" 
+    # Java settings
+    export _JAVA_AWT_WM_NONREPARENTING=1
+    export _JAVA_OPTIONS="-Dawt.useSystemAAFontSettings=lcd_vrgb -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel" 
     # keychain
     #eval `keychain -q`
 
@@ -187,23 +187,27 @@ precmd () {print -Pn "\e]0;%n@%m: %~\a"}
     alias lla='ls -lAh'
     alias privatize='chmod go-rwx'
 
-    alias tasks='clear;task cal;task long;task summary'
+    alias tasks='clear;task calendar;task long;task summary'
     alias pdf='mupdf %s & disown'
 
     alias strtx='startx&disown;vlock'
     alias srvc='sudo systemctl'
 
     ## Arch Linux pacman aliases
+    alias pacman='pacman --color=auto'
     alias pacs='pacman -Ss'
     alias pacq='pacman -Qi'
     alias paci='sudo pacman -S'
     alias pacu='sudo pacman -Syu'
 
     ## Cower aliases
+    alias cower='cower --color=auto'
     alias cows='cower -s'
-    alias cowd='cower =d'
+    alias cowd='cower -d'
 
+    # up fuction for cd ..
+    up() { local x='';for i in $(seq ${1:-1});do x="$x../"; done;cd $x; }
 
-	# }}}
+    # }}}
 
     export PATH=$PATH:$HOME/scripts/
