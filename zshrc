@@ -193,18 +193,6 @@ precmd () {print -Pn "\e]0;%n@%m: %~\a"}
     alias strtx='startx&disown;vlock'
     alias srvc='sudo systemctl'
 
-    ## Arch Linux pacman aliases
-    alias pacman='pacman --color=auto'
-    alias pacs='pacman -Ss'
-    alias pacq='pacman -Qi'
-    alias paci='sudo pacman -S'
-    alias pacu='sudo pacman -Syu'
-
-    ## Cower aliases
-    alias cower='cower --color=auto'
-    alias cows='cower -s'
-    alias cowd='cower -d'
-
     # up fuction for cd ..
     up() { local x='';for i in $(seq ${1:-1});do x="$x../"; done;cd $x; }
 
