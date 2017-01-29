@@ -187,7 +187,7 @@ precmd () {print -Pn "\e]0;%n@%m: %~\a"}
     alias lla='ls -lAh'
     alias privatize='chmod go-rwx'
 
-    alias tasks='clear;task cal;task long;task summary'
+    alias tasks='clear;task long;task summary'
     alias pdf='mupdf %s & disown'
 
     alias strtx='startx&disown;vlock'
@@ -198,11 +198,6 @@ precmd () {print -Pn "\e]0;%n@%m: %~\a"}
     alias pacq='pacman -Qi'
     alias paci='sudo pacman -S'
     alias pacu='sudo pacman -Syu'
-
-    ## Cower aliases
-    alias cows='cower -s'
-    alias cowd='cower =d'
-
 
 	# }}}
 
