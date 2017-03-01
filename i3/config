@@ -283,11 +283,8 @@ bindsym XF86Calculator exec galculator
 
 #set dual monitors
 #exec /home/randy/double_screen.sh
-<<<<<<< HEAD
-=======
 exec xrandr --output DVI-0 --mode 1440x900 --primary
 exec xrandr --output VGA-0 --mode 1440x900 --left-of DVI-0
->>>>>>> 14e5d421effed35594a3c4ea234fe4824c815dcb
 
 # Set compose key map
 exec xmodmap ~/compose_keymap

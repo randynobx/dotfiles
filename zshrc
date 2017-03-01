@@ -187,11 +187,7 @@ precmd () {print -Pn "\e]0;%n@%m: %~\a"}
     alias lla='ls -lAh'
     alias privatize='chmod go-rwx'
 
-<<<<<<< HEAD
-    alias tasks='clear;task calendar;task long;task summary'
-=======
     alias tasks='clear;task long;task summary'
->>>>>>> 14e5d421effed35594a3c4ea234fe4824c815dcb
     alias pdf='mupdf %s & disown'
 
     alias strtx='startx&disown;vlock'
@@ -200,10 +196,6 @@ precmd () {print -Pn "\e]0;%n@%m: %~\a"}
     # up fuction for cd ..
     up() { local x='';for i in $(seq ${1:-1});do x="$x../"; done;cd $x; }
 
-<<<<<<< HEAD
-    # }}}
-=======
 	# }}}
->>>>>>> 14e5d421effed35594a3c4ea234fe4824c815dcb
 
     export PATH=$PATH:$HOME/scripts/
