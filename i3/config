@@ -273,15 +273,21 @@ bindsym Escape mode "default"
 bindsym $mod+r mode "resize"
 
 #Special keys
-#bindsym XF86RaiseVolume x
-#bindsym XF86LowerVolume x
-#bindsym XF86AudioMute x
-#bindsym XF86AudioPlay exec mpc toggle
-#bindsym XF86AudioPrev exec mpc prev
-#bindsym XF86AudioNext exec mpc next
+bindsym XF86AudioRaiseVolume exec amixer set Master 1%+
+bindsym XF86AudioLowerVolume exec amixer set Master 1%-
+bindsym XF86AudioMute exec amixer set Master toggle
+bindsym XF86AudioPlay exec mpc toggle
+bindsym XF86AudioPrev exec mpc prev
+bindsym XF86AudioNext exec mpc next
+bindsym XF86Calculator exec galculator
 
 #set dual monitors
 #exec /home/randy/double_screen.sh
+<<<<<<< HEAD
+=======
+exec xrandr --output DVI-0 --mode 1440x900 --primary
+exec xrandr --output VGA-0 --mode 1440x900 --left-of DVI-0
+>>>>>>> 14e5d421effed35594a3c4ea234fe4824c815dcb
 
 # Set compose key map
 exec xmodmap ~/compose_keymap
@@ -290,7 +296,7 @@ exec xmodmap ~/compose_keymap
 # finds out, if available)
 
 bar {
-    output          LVDS1
+#    output          LVDS1
     status_command  i3status --config ~/.i3/i3status.conf
     position        bottom
     workspace_buttons   yes
@@ -301,5 +307,6 @@ exec i3status -c .i3/i3status.conf | i3bar -d
 #exec conky -c /home/randy/.conkyrc | dzen2 -fn 'DejaVu Sans Mono-9' -ta r -dock -xs 1
 #exec conky -c /home/randy/.conkyrc | i3-wsbar -c "dzen2 -x %x -dock"
 
-exec feh --bg-scale ~/mountains_wallpaper.jpg
+# Set wallpapaer
+exec feh --bg-scale ~/desktop_background.jpg
 exec xcompmgr -o 80 & disown
