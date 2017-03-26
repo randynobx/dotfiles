@@ -1,35 +1,52 @@
-"====[ Indent and tab options ]======
-set autoindent
-set smartindent
-set tabstop=4
-set shiftwidth=4
-set expandtab
-set incsearch
+" Colors
+    " colorscheme molokai
+    syntax enable   " enable syntax processing
 
-set encoding=utf-8
+" Spaces and Tabs
+    set autoindent  "
+    set smartindent "
+    set tabstop=4   " number of visual spaces per TAB
+    set shiftwidth=4    " number of spaces in TAB when editing
+    set expandtab   " tabs are spaces
 
-set ruler
-filetype plugin indent on
-syntax on
-set number
-let mapleader=","
+" UI Config
+    set ruler   " show cursor coordinates in bottom right corner
+    set number  " show line numbers
+    set showcmd " show command in bottom bar
+    set cursorline  " highlight current line
+    set wildmenu    " visual autocomplete for command menu
+    set showmatch   " highlight matching [{()}]
 
-"====[ Make tabs, trailing whitespace, and non-breaking spaces visible ]======
+" Searching
+    set incsearch   " search as characters are entered
+    set hlsearch    " highlight matches
+    " turn off search highlight
+      nnoremap <leader><space> :nohlsearch<CR>
 
-    exec "set listchars=tab:\uBB\uBB,trail:\uB7,nbsp:~"
-        set list
+" Folding
+    set foldenable  " enable folding
+    set foldlevelstart=10   " open most folds by default
+    set foldnestmax=10   " 10 nested fold max
+    " space open/closes folds
+      nnoremap <space> za
+    set foldmethod=indent   " fold based on indent level
 
+" Leader
+    let mapleader=","   " leader is comma
+    " swap : and ; to make colon commands easier to type
+    nnoremap  ;  :
+    "nnoremap  :  ;
 
-"====[ Swap : and ; to make colon commands easier to type ]======
+" Misc
+    set encoding=utf-8  " set encoding to utf-8
+    " highlight last inserted text
+      nnoremap gV `[v`]
+    filetype plugin indent on
 
-"    nnoremap  ;  :
-"    nnoremap  :  ;
+    " Make tabs, trailing whitespace, and non-breaking spaces visible
+      exec "set listchars=tab:\uBB\uBB,trail:\uB7,nbsp:~"
+      set list
 
-"====[ Highlight just the 81st column of wide lines...
-"highlight ColourColumn ctermbg=magneta
-"call matchadd('ColourColumn', '\%81v', 100)
-
-"====[ vim-latexsuite plugin ]=====
-filetype plugin indent on
-set grepprg=grep\ -nH\ $*
-let g:tex_flavor = "latex"
+" vim-latexsuite plugin
+    set grepprg=grep\ -nH\ $*
+    let g:tex_flavor = "latex"
