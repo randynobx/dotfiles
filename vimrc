@@ -13,7 +13,6 @@
     set ruler   " show cursor coordinates in bottom right corner
     set number  " show line numbers
     set showcmd " show command in bottom bar
-    set cursorline  " highlight current line
     set wildmenu    " visual autocomplete for command menu
     set showmatch   " highlight matching [{()}]
 

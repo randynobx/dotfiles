@@ -48,10 +48,3 @@ alias ls='ls -F'
 alias ll='ls -lF'
 alias la='ls -AF'
 alias lla='ls -lAF'
-
-# apt-get aliases
-alias sysupdate='sudo apt-get update && sudo apt-get upgrade'
-alias pkgsearch='apt-cache search'
-alias pkgs='apt-cache search'
-alias pkginstall='sudo apt-get install'
-alias pkgi='sudo apt-get install'
