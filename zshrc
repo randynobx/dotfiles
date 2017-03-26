@@ -3,17 +3,17 @@
 ## author: mutantmonkey <mutantmonkey@gmail.com>
 #################################################################################
 
-# History {{{
+### History ###
 
 HISTFILE=~/.zsh_history
 HISTSIZE=50000
 SAVEHIST=50000
 setopt appendhistory
 
-# }}}
+### End History ###
 
 
-# Key bindings {{{
+### Key bindings ###
 
 bindkey -v
 
@@ -53,10 +53,10 @@ bindkey "^[OH" end-of-line
 ## completion in the middle of a line
 #bindkey '^i' expand-or-complete-prefix
 
-# }}}
+### End Key bindings ###
 
 
-# Auto completion {{{
+### Auto completion ###
 
 zstyle :compinstall filename "$HOME/.zshrc"
 
@@ -72,10 +72,10 @@ zstyle ':completion:*:approximate:*' max-errors 1 numeric
 zstyle ':completion:*:*:kill:*' menu yes select
 zstyle ':completion:*:kill:*' force-list always
 
-# }}}
+### End Auto completion ###
 
 
-# Terminal colors {{{
+### Terminal colors ###
 
 # directory colors
 if [ "$TERM" != "dumb" ]; then
@@ -109,10 +109,10 @@ fi
      echo -en "\e]PFffffff" # bright-white (white)
  fi
 
-# }}}
+### End Terminal colors ###
 
 
-# Window title {{{
+### Window title ###
 
 # user@host:dir
 case "$TERM" in
@@ -121,81 +121,97 @@ precmd () {print -Pn "\e]0;%n@%m: %~\a"}
     ;;
     esac
 
-    # }}}
+### End Window title ###
 
 
-    # Prompt {{{
+### Prompt ###
 
-    MAIN_COLOR=$'%{\e[1;30m%}'
-    #USER_COLOR=$'%{\e[1;32m%}' ## This line is not necessary as USER_COLOR will be set below depending on current user
-    HOST_COLOR=$'%{\e[1;36m%}'
-    DIR_COLOR=$'%{\e[0;37m%}'
-    RESET_COLOR=$'%{\e[0;00m%}'
+MAIN_COLOR=$'%{\e[1;30m%}'
+#USER_COLOR=$'%{\e[1;32m%}' ## This line is not necessary as USER_COLOR will be set below depending on current user
+HOST_COLOR=$'%{\e[1;36m%}'
+DIR_COLOR=$'%{\e[0;37m%}'
+RESET_COLOR=$'%{\e[0;00m%}'
 
-    randy=1000
-    root=0
-    if [ $(id -u) -eq $randy ]; then    # Green if user is randy
-        USER_COLOR=$'%{\e[1;32m%}'
-    elif [ $(id -u) -eq $root ]; then   # Red if user is root
-        USER_COLOR=$'%{\e[1;31m%}'
-    else                                # Yellow if user is anyone else
-        USER_COLOR=$'%{\e[1;33m%}'
-    fi
+randy=1000
+root=0
+if [ $(id -u) -eq $randy ]; then    # Green if user is randy
+   USER_COLOR=$'%{\e[1;32m%}'
+elif [ $(id -u) -eq $root ]; then   # Red if user is root
+   USER_COLOR=$'%{\e[1;31m%}'
+else                                # Yellow if user is anyone else
+   USER_COLOR=$'%{\e[1;33m%}'
+fi
 
-    export PROMPT="$MAIN_COLOR($RESET_COLOR%!:$USER_COLOR%n$RESET_COLOR@$HOST_COLOR%m$MAIN_COLOR|$DIR_COLOR%1~$MAIN_COLOR)$USER_COLOR%#$RESET_COLOR "
-    export PROMPT2="$MAIN_COLOR... $RESET_COLOR"
+export PROMPT="$MAIN_COLOR($RESET_COLOR%!:$USER_COLOR%n$RESET_COLOR@$HOST_COLOR%m$MAIN_COLOR|$DIR_COLOR%1~$MAIN_COLOR)$USER_COLOR%#$RESET_COLOR "
+export PROMPT2="$MAIN_COLOR... $RESET_COLOR"
 
-    # }}}
-
-
-    # Variables {{{
-
-    export BROWSER=firefox
-    export EDITOR=vim
-    export PAGER=less
-    export LESS="-R -iMx4"
-
-    # ensure terminal type is set properly for color-capable terminals
-    if [[ "$COLORTERM" == "gnome-terminal" ]] || [[ "$COLORTERM" == "Terminal" ]] || [[ "$COLORTERM" == "roxterm" ]]; then
-    # make sure $TERM is xterm-256color if the terminal supports 256 colors
-    export TERM=xterm-256color
-    fi
-
-    if [ -n "$TMUX" ]; then
-    # set $TERM for tmux
-    export TERM=screen-256color
-    fi
-
-    # Java settings
-    export _JAVA_AWT_WM_NONREPARENTING=1
-    export _JAVA_OPTIONS="-Dawt.useSystemAAFontSettings=lcd_vrgb -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel" 
-    # keychain
-    #eval `keychain -q`
-
-    # }}}
+### End Prompt ###
 
 
-    # Aliases {{{
-    alias h='history'
-    alias j='jobs'
-    alias p='pinky'
+### Variables ###
 
-    alias vimless='/usr/share/vim/vim74/macros/less.sh'
+export BROWSER=firefox
+export EDITOR=vim
+export PAGER=less
+export LESS="-R -iMx4"
 
-    alias ll='ls -lh'
-    alias la='ls -Ah'
-    alias lla='ls -lAh'
-    alias privatize='chmod go-rwx'
+# ensure terminal type is set properly for color-capable terminals
+if [[ "$COLORTERM" == "gnome-terminal" ]] || [[ "$COLORTERM" == "Terminal" ]] || [[ "$COLORTERM" == "roxterm" ]]; then
+   # make sure $TERM is xterm-256color if the terminal supports 256 colors
+   export TERM=xterm-256color
+fi
 
-    alias tasks='clear;task long;task summary'
-    alias pdf='mupdf %s & disown'
+if [ -n "$TMUX" ]; then
+   # set $TERM for tmux
+   export TERM=screen-256color
+fi
 
-    alias strtx='startx&disown;vlock'
-    alias srvc='sudo systemctl'
+# Java settings
+export _JAVA_AWT_WM_NONREPARENTING=1
+export _JAVA_OPTIONS="-Dawt.useSystemAAFontSettings=lcd_vrgb -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel" 
+# keychain
+#eval `keychain -q`
 
-    # up fuction for cd ..
-    up() { local x='';for i in $(seq ${1:-1});do x="$x../"; done;cd $x; }
+### End Variables ###
 
-	# }}}
 
-    export PATH=$PATH:$HOME/scripts/
+### Aliases ###
+alias h='history'
+alias j='jobs'
+alias p='pinky'
+
+alias vimless='/usr/share/vim/vim74/macros/less.sh'
+
+alias ll='ls -lh'
+alias la='ls -Ah'
+alias lla='ls -lAh'
+alias privatize='chmod go-rwx'
+
+alias tasks='clear;task long;task summary'
+alias pdf='mupdf %s & disown'
+
+alias strtx='startx&disown;vlock'
+
+## Arch Linux pacman aliases
+alias pacman='pacman --color=auto'
+alias pacs='pacman -Ss'
+alias pacq='pacman -Qi'
+alias paci='sudo pacman -S'
+alias pacu='sudo pacman -Syu'
+
+### End Aliases ###
+
+### Functions ###
+
+# up fuction for cd ..
+up() {
+    local x=''
+    for i in $(seq ${1:-1}); do
+        x="$x../"
+    done
+    cd $x
+}
+
+### End Functions ###
+
+export PATH=$PATH:$HOME/bin/:$HOME/.gem/ruby/2.2.0/bin
