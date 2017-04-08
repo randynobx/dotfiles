@@ -17,42 +17,7 @@ setopt appendhistory
 
 bindkey -v
 
-bindkey '^[[A' vi-up-line-or-history
-bindkey '^[[B' vi-down-line-or-history
-bindkey '^R' history-incremental-search-backward
-
-bindkey "^[OF" beginning-of-line
-bindkey "^[OH" end-of-line
-
-#bindkey "\e[1~" beginning-of-line
-#bindkey "\e[4~" end-of-line
-#bindkey "\e[5~" beginning-of-history
-#bindkey "\e[6~" end-of-history
-#bindkey "\e[3~" delete-char
-#bindkey "\e[2~" quoted-insert
-#bindkey "\e[5C" forward-word
-#bindkey "\eOc" emacs-forward-word
-#bindkey "\e[5D" backward-word
-#bindkey "\eOd" emacs-backward-word
-#bindkey "\e\e[C" forward-word
-#bindkey "\e\e[D" backward-word
-#bindkey "^H" backward-delete-word
-
-## for rxvt
-#bindkey "\e[8~" end-of-line
-#bindkey "\e[7~" beginning-of-line
-
-## for non RH/Debian xterm, can't hurt for RH/DEbian xterm
-#bindkey "\eOH" beginning-of-line
-#bindkey "\eOF" end-of-line
-
-## for freebsd console
-#bindkey "\e[H" beginning-of-line
-#bindkey "\e[F" end-of-line
-
-## completion in the middle of a line
-#bindkey '^i' expand-or-complete-prefix
-
+#bindkey '^R' history-incremental-search-backward
 ### End Key bindings ###
 
 
@@ -79,14 +44,14 @@ zstyle ':completion:*:kill:*' force-list always
 
 # directory colors
 if [ "$TERM" != "dumb" ]; then
-# directory colors
-eval `dircolors -b`
-alias ls='ls --color=auto -F'
-alias dir='ls --color=auto -F'
+    # directory colors
+    eval `dircolors -b`
+    alias ls='ls --color=auto -F'
+    alias dir='ls --color=auto -F'
 
-# grep color
-export GREP_COLOR="1;33"
-alias grep='grep --color=auto'
+    # grep color
+    export GREP_COLOR="1;33"
+    alias grep='grep --color=auto'
 fi
 
 # Zenburn colors for console
@@ -116,10 +81,10 @@ fi
 
 # user@host:dir
 case "$TERM" in
-xterm*|rxvt*)
-precmd () {print -Pn "\e]0;%n@%m: %~\a"}
-    ;;
-    esac
+    xterm*|rxvt*)
+    precmd () {print -Pn "\e]0;%n@%m: %~\a"}
+        ;;
+esac
 
 ### End Window title ###
 
@@ -166,12 +131,6 @@ if [ -n "$TMUX" ]; then
    export TERM=screen-256color
 fi
 
-# Java settings
-export _JAVA_AWT_WM_NONREPARENTING=1
-export _JAVA_OPTIONS="-Dawt.useSystemAAFontSettings=lcd_vrgb -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel" 
-# keychain
-#eval `keychain -q`
-
 ### End Variables ###
 
 
@@ -179,8 +138,6 @@ export _JAVA_OPTIONS="-Dawt.useSystemAAFontSettings=lcd_vrgb -Dswing.defaultlaf=
 alias h='history'
 alias j='jobs'
 alias p='pinky'
-
-alias vimless='/usr/share/vim/vim74/macros/less.sh'
 
 alias ll='ls -lh'
 alias la='ls -Ah'
@@ -193,11 +150,11 @@ alias pdf='mupdf %s & disown'
 alias strtx='startx&disown;vlock'
 
 ## Arch Linux pacman aliases
-alias pacman='pacman --color=auto'
-alias pacs='pacman -Ss'
-alias pacq='pacman -Qi'
-alias paci='sudo pacman -S'
-alias pacu='sudo pacman -Syu'
+alias pacman='pacaur --color auto'
+alias pacs='pacaur -s'
+alias pacq='pacaur -Qi'
+alias paci='pacaur -S'
+alias pacu='pacaur -Syu'
 
 ### End Aliases ###
 
