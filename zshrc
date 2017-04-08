@@ -25,8 +25,9 @@ bindkey -v
 
 zstyle :compinstall filename "$HOME/.zshrc"
 
-autoload -Uz compinit
+autoload -Uz compinit vcs_info
 compinit
+vcs_info
 
 # allow approximate
 zstyle ':completion:*' completer _complete _match _approximate
@@ -38,7 +39,6 @@ zstyle ':completion:*:*:kill:*' menu yes select
 zstyle ':completion:*:kill:*' force-list always
 
 ### End Auto completion ###
-
 
 ### Terminal colors ###
 
@@ -74,6 +74,9 @@ fi
      echo -en "\e]PFffffff" # bright-white (white)
  fi
 
+green=$'%{\e[1;32m%}'
+yellow=$'%{\e[1;33m%}'
+red=$'%{\e[1;31m%}'
 ### End Terminal colors ###
 
 
@@ -87,6 +90,19 @@ case "$TERM" in
 esac
 
 ### End Window title ###
+
+### Git config ###
+zstyle ':vcs_info:*' enable git
+zstyle ':vcs_info:git*:*' get-revision true
+zstyle ':vcs_info:git*:*' check-for-changes true
+
+# hash changes branch misc
+
+zstyle ':vcs_info:git*' formats "%6.6i %c%u %b%m" # hash changes branch misc
+zstyle ':vcs_info:git*' actionformats "%6.6i %c%u %b%m"
+zstyle ':vcs_info:git*:*' stagedstr "${green}S${DIR_COLOR}"
+zstyle ':vcs_info:git*:*' unstagedstr "${red}U${DIR_COLOR}"
+### End Git config ###
 
 
 ### Prompt ###
@@ -107,7 +123,7 @@ else                                # Yellow if user is anyone else
    USER_COLOR=$'%{\e[1;33m%}'
 fi
 
-export PROMPT="$MAIN_COLOR($RESET_COLOR%!:$USER_COLOR%n$RESET_COLOR@$HOST_COLOR%m$MAIN_COLOR|$DIR_COLOR%1~$MAIN_COLOR)$USER_COLOR%#$RESET_COLOR "
+export PROMPT="$MAIN_COLOR($RESET_COLOR%!:$USER_COLOR%n$RESET_COLOR@$HOST_COLOR%m$MAIN_COLOR|$DIR_COLOR%~ ${vcs_info_msg_0_}$MAIN_COLOR)$USER_COLOR%#$RESET_COLOR "
 export PROMPT2="$MAIN_COLOR... $RESET_COLOR"
 
 ### End Prompt ###
