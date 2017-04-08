@@ -10,6 +10,7 @@ setopt interactive_comments
 
 # use VI keybindings
 bindkey -v
+bindkey '^R' history-incremental-search-backward
 
 ### End Misc ###
 
