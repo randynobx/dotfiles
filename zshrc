@@ -185,7 +185,7 @@ zstyle ':vcs_info:*' check-for-changes true
 zstyle ':vcs_info:*' actionformats \
     '%F{5}[%F{2}%b%F{3}|%F{1}%a%F{5}]%f '
 zstyle ':vcs_info:*' formats       \
-    '%F{5}[%F{2}%b%F{5}|%F{3}%c%F{1}%u%F{5}]%f '
+    '%F{3}%c%F{1}%u %F{5}[%F{2}%b%F{5}]%f '
 
 zstyle ':vcs_info:*' enable git
 
