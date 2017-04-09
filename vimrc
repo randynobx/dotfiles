@@ -1,5 +1,6 @@
 " Colors
     syntax enable   " enable syntax processing
+    "set background=dark " for [dark|light] bg if using solarized
     colorscheme zenburn
 
 " Spaces and Tabs
