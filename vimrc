@@ -1,6 +1,6 @@
 " Colors
-    " colorscheme molokai
     syntax enable   " enable syntax processing
+    colorscheme zenburn
 
 " Spaces and Tabs
     set autoindent  "
