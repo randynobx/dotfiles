@@ -299,13 +299,14 @@ exec xmodmap ~/.compose_keymap
 
 bar {
     #output          LVDS1
-    status_command  i3status --config ~/.i3/i3status.conf
+    status_command py3status -c ~/.i3/i3status.conf
+    #status_command  i3status --config ~/.i3/i3status.conf
     position        bottom
     workspace_buttons   yes
     tray_output primary
 }
 
-exec i3status -c .i3/i3status.conf | i3bar -d
+#exec i3status -c .i3/i3status.conf | i3bar -d
 #exec conky -c /home/randy/.conkyrc | dzen2 -fn 'DejaVu Sans Mono-9' -ta r -dock -xs 1
 #exec conky -c /home/randy/.conkyrc | i3-wsbar -c "dzen2 -x %x -dock"
 
