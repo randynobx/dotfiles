@@ -154,8 +154,9 @@ alias pdf='mupdf %s & disown'
 alias strtx='startx&disown;vlock'
 
 ## Arch Linux pacman aliases
-alias pacman='pacaur --color auto'
-alias pacs='pacaur -s'
+alias pacman='pacman --color auto'
+alias pacaur='pacaur --color auto'
+alias pacs='pacaur -Ss'
 alias pacq='pacaur -Qi'
 alias paci='pacaur -S'
 alias pacu='pacaur -Syu'
