@@ -114,16 +114,6 @@ bindsym $mod+Return exec termite
 bindsym $mod+Shift+Q kill
 
 bindsym $mod+F1 exec i3lock /home/randy/pictures/lockscreen.png
-# increase volume in alsamixer
-bindsym $mod+F3 exec amixer set Master 3+ unmute
-# decrease volume in alsamixer
-bindsym $mod+F2 exec amixer set Master 3- unmute
-# pause ncmpcpp
-bindsym $mod+F11 exec ncmpcpp toggle
-# next song in ncmpcpp
-bindsym $mod+F12 exec ncmpcpp next
-# previous song in ncmpcpp
-bindsym $mod+F10 exec ncmpcpp prev
 
 # start ranger
 bindsym $mod+Shift+F exec termite --exec ranger --title ranger --class=pop-up
