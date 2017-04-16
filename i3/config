@@ -56,13 +56,11 @@ set $mon1 VGA-0
  #new_window border_style 1pixel
 
  for_window [class="Firefox"] border 1pixel
- for_window [class="Jumanji"] border 1pixel
  for_window [class="Keepassx"] border 1pixel
  for_window [class="MPlayer"] border 1pixel
  for_window [class="sxiv"] border 1pixel
  for_window [class="mupdf"] border 1pixel
  for_window [title="mplayer2"] border 1pixel
- for_window [class="Rxvt"] border 1pixel
  for_window [title="Steam"] border 1pixel
  for_window [class="Virt-manager"] border 1pixel
 
@@ -110,8 +108,6 @@ bindsym Print exec /usr/bin/scrot
 bindsym Ctrl+$mod+l exec i3lock -d #-i /home/randy/pictures/lockscreen.png
 
 # start a terminal
-for_window [class="FloatTerm"] floating enable
-bindsym $mod+Shift+Return exec urxvt --class FloatTerm
 bindsym $mod+Return exec termite
 
 # kill focused window
@@ -130,10 +126,10 @@ bindsym $mod+F12 exec ncmpcpp next
 bindsym $mod+F10 exec ncmpcpp prev
 
 # start ranger
-bindsym $mod+Shift+F exec urxvt -e ranger
+bindsym $mod+Shift+F exec termite --exec ranger --title ranger --class=pop-up
 
 # start dmenu (a program launcher)
-bindsym $mod+d exec dmenu_run
+bindsym $mod+d exec dmenu_run -p "Launch: " -i
 
 # start quickswitch.py
 bindsym $mod+a exec quickswitch.py
@@ -277,7 +273,7 @@ bindsym XF86AudioPlay exec mpc toggle
 bindsym XF86AudioPrev exec mpc prev
 bindsym XF86AudioNext exec mpc next
 bindsym XF86Calculator exec galculator
-bindsym XF86Search exec urxvt -e ranger
+bindsym XF86Search exec termite --exec ranger --title ranger --class=pop-up
 bindsym XF86MonBrightnessUp exec sudo xbacklight -inc 5
 bindsym XF86MonBrightnessDown exec sudo xbacklight -dec 5
 
@@ -289,7 +285,6 @@ exec xmodmap ~/.compose_keymap
 
 bar {
     status_command py3status -c ~/.config/i3/i3status.conf
-    #status_command  i3status --config ~/.i3/i3status.conf
     position        bottom
     workspace_buttons   yes
     tray_output primary
