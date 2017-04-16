@@ -151,8 +151,6 @@ alias privatize='chmod go-rwx'
 alias tasks='clear;task long;task summary'
 alias pdf='mupdf %s & disown'
 
-alias strtx='source .profile;startx&disown;vlock'
-
 ## Arch Linux pacman aliases
 alias pacman='pacman --color auto'
 alias pacaur='pacaur --color auto'
