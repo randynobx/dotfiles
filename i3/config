@@ -22,75 +22,51 @@ set $ws8 8
 set $ws9 9
 set $ws10 10
 
-# Monitor var
-set $mon0 HDMI-0
-set $mon1 VGA-0
+# Set modifier key
+set $mod Mod4
 
+# Fonts
+#font for window titles. ISO 10646 = Unicode
+font pango:Terminus 24px
 
+#new_window border_style 1pixel
 
-###############################################
-# Multi-Monitor setup
-###############################################
+for_window [class="Firefox"] border 1pixel
+for_window [class="Keepassx"] border 1pixel
+for_window [class="MPlayer"] border 1pixel
+for_window [class="mupdf"] border 1pixel
+for_window [title="mplayer2"] border 1pixel
+for_window [title="Steam"] border 1pixel
+for_window [class="Virt-manager"] border 1pixel
 
-#workspace $ws1 output $mon0
-#workspace $ws2 output $mon1
-#workspace $ws3 output $mon0
-#workspace $ws4 output $mon0
-#workspace $ws5 output $mon0
+# Set floating windows
+for_window [class="feh"] floating enable
+for_window [title="Mixer"] floating enable
+for_window [title="mplayer2"] floating enable
+for_window [title="mpv"] floating enable
+for_window [title="galculator"] floating enable
+for_window [title="Volume Control"] floating enable
 
-#workspace $ws6 output $mon1
-#workspace $ws7 output $mon1
-#workspace $ws8 output $mon1
-#workspace $ws9 output $mon1
-#workspace $ws10 output $mon1
+for_window [window_role="pop-up"] floating enable
+for_window [window_role="pop-up"] floating enable
+for_window [window_role="task_dialog"] floating enable
 
-###############################################
-
- set $mod Mod4
-
- font for window titles. ISO 10646 = Unicode
- #font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
- font -misc-dejavu sans mono-medium-r-normal--12-0-0-0-m-0-iso10646-1
- font -schumacher-clean-medium-r-normal--12-*-*-*-*-*-*-*
-
- #new_window border_style 1pixel
-
- for_window [class="Firefox"] border 1pixel
- for_window [class="Keepassx"] border 1pixel
- for_window [class="MPlayer"] border 1pixel
- for_window [class="sxiv"] border 1pixel
- for_window [class="mupdf"] border 1pixel
- for_window [title="mplayer2"] border 1pixel
- for_window [title="Steam"] border 1pixel
- for_window [class="Virt-manager"] border 1pixel
-
- for_window [title="Calculator"] floating enable
- for_window [class="sxiv"] floating enable
- for_window [title="Mixer"] floating enable
- for_window [title="mplayer2"] floating enable
- for_window [title="mpv"] floating enable
- for_window [title="galculator"] floating enable
- for_window [title="Volume Control"] floating enable
-
- for_window [window_role="pop-up"] floating enable
-
- # Colors {{{
-
- # class border bg fg
- client.focused #5b605e #5b605e #262626
- client.focused_inactive #3f3f3f #3f3f3f #5b605e
- client.unfocused #3f3f3f #3f3f3f #5b605e
- client.urgent #dca3a3 #3f3f3f #dca3a3
-
- client.background #000000
-
- # }}}
+for_window [class="pop-up"] border 1pixel
+for_window [class="pop-up"] floating enable
 
 # assign programs to specific workspaces
 assign [class="Firefox"] 10
 
-# font for window titles. ISO 10646 = Unicode
-font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
+# Colors {{{
+# class border bg fg
+client.focused #5b605e #5b605e #262626
+client.focused_inactive #3f3f3f #3f3f3f #5b605e
+client.unfocused #3f3f3f #3f3f3f #5b605e
+client.urgent #dca3a3 #3f3f3f #dca3a3
+
+client.background #000000
+
+# }}}
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -105,27 +81,22 @@ bindsym $mod+o scratchpad show
 # screenshot with PrintScrn
 bindsym Print exec /usr/bin/scrot
 
-# lock screen with i3lock [-d to disable screen on lock] [-i for custom bg image]
-bindsym Ctrl+$mod+l exec i3lock -d #-i /home/randy/pictures/lockscreen.png
-
 # start a terminal
 bindsym $mod+Return exec termite
 
 # kill focused window
 bindsym $mod+Shift+Q kill
 
-bindsym $mod+F1 exec i3lock /home/randy/pictures/lockscreen.png
-
-# start ranger
-bindsym $mod+Shift+F exec termite --exec ranger --title ranger --class=pop-up
-
 # start dmenu (a program launcher)
-bindsym $mod+d exec dmenu_run -p "Launch: " -i
+bindsym $mod+d exec dmenu_run -i
 
 # start quickswitch.py
-bindsym $mod+a exec quickswitch.py
-bindsym $mod+Shift+A exec quickswitch.py -s
+bindsym $mod+Shift+F exec quickswitch.py
+bindsym $mod+Shift+P exec quickswitch.py -s
 bindsym $mod+Shift+D exec quickswitch.py -m
+
+# jump to window marked urgent
+bindsym $mod+x [urgent=latest] focus
 
 # change focus
 bindsym $mod+h focus left
@@ -284,3 +255,25 @@ bar {
 
 # Set wallpaper
 exec feh --bg-scale ~/pictures/wallpapers/desktop_background.jpg
+
+## System lock/logout/suspend/hibernate/reboot/shutdown
+set $Locker  i3lock --ignore-empty-password --color=3f3f3f && sleep 1
+
+# Quick lock keymap
+bindsym Ctrl+$mod+l exec $Locker
+
+set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (Shift+s) shutdown
+mode "$mode_system" {
+    bindsym l exec --no-startup-id $Locker, mode "default"
+    bindsym e exec --no-startup-id i3-msg exit, mode "default"
+    bindsym s exec --no-startup-id $Locker && systemctl suspend, mode "default"
+    bindsym h exec --no-startup-id $Locker && systemctl hibernate, mode "default"
+    bindsym r exec --no-startup-id systemctl reboot, mode "default"
+    bindsym Shift+s exec --no-startup-id systemctl poweroff -i, mode "default"
+
+    # back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+bindsym $mod+Pause mode "$mode_system"
