@@ -99,6 +99,9 @@ bindsym $mod+Shift+F exec quickswitch.py
 bindsym $mod+Shift+P exec quickswitch.py -s
 bindsym $mod+Shift+D exec quickswitch.py -m
 
+# jump to window marked urgent
+bindsym $mod+x [urgent=latest] focus
+
 # change focus
 bindsym $mod+h focus left
 bindsym $mod+j focus down
