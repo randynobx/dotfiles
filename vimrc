@@ -61,9 +61,3 @@
     " Open new panes to the right and bottom
     set splitbelow
     set splitright
-
-    "Swap top/bottom or left/right split
-    Ctrl+W R
-    "
-    "Break out current window into a new tabview
-    Ctrl+W T
