@@ -148,6 +148,7 @@ alias la='ls -Ah'
 alias lla='ls -lAh'
 alias privatize='chmod go-rwx'
 
+alias tasks='clear;task log; task summary'
 alias pdf='mupdf %s & disown'
 
 ## Arch Linux pacman aliases
