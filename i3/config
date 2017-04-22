@@ -55,7 +55,7 @@ for_window [class="pop-up"] border 1pixel
 for_window [class="pop-up"] floating enable
 
 # assign programs to specific workspaces
-assign [class="Firefox"] 10
+assign [class="Firefox"] 9
 
 # Colors {{{
 # class border bg fg
