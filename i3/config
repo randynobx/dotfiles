@@ -27,7 +27,7 @@ set $mod Mod4
 
 # Fonts
 #font for window titles. ISO 10646 = Unicode
-font pango:Terminus 24px
+font pango:Terminus 10px
 
 #new_window border_style 1pixel
 
