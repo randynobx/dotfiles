@@ -148,7 +148,6 @@ alias la='ls -Ah'
 alias lla='ls -lAh'
 alias privatize='chmod go-rwx'
 
-alias tasks='clear;task long;task summary'
 alias pdf='mupdf %s & disown'
 
 ## Arch Linux pacman aliases
@@ -217,3 +216,7 @@ RPROMPT=$'$(vcs_info_wrapper)'
 ### End Git branch info ###
 
 export PATH=$PATH:$HOME/bin/:$HOME/.gem/ruby/2.2.0/bin
+
+### Source fzf files
+source /usr/share/fzf/key-bindings.zsh
+source /usr/share/fzf/completion.zsh
