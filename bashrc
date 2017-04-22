@@ -74,3 +74,15 @@ if [ -n "$TMUX" ]; then
     # set $TERM for tmux
     export TERM=screen-256color
 fi
+
+### Functions ###
+
+up() {
+    local x=''
+    for i in $(seq ${1:-1}); do
+        x="$x../"
+    done
+    cd $x
+}
+
+### End Functions ###
