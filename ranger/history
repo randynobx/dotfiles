@@ -1,0 +1,37 @@
+find sy
+echo %D
+echo %d
+echo %s
+touch test.txt
+move %s test.t
+shell mv %s t.txt
+shell rm %s
+rename repos
+rename projects
+open_with 1
+open_with 0
+open_with 
+shell 
+rename bin
+cd 
+rename 
+shell  %s
+mkdir iptables_setup
+shell vim diff %s
+shell vimdiff %s
+delete
+copy 
+rename iptables_setup_custom.sh_
+rename iptables_setup_base.sh
+shell dtrx %s
+rename fzf.vim
+w
+wq
+
+flat 
+flat
+open_with l
+delete 
+FZF
+find 
+fzf_select 
