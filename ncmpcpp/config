@@ -1,0 +1,25 @@
+#mpd_music_dir = "/home/randy/Music/mp3/"
+mpd_host = "jerry"
+
+# use alternative UI
+user_interface = "alternative"
+
+# use columns display mode
+playlist_display_mode = "columns"
+browser_display_mode = "columns"
+
+# mouse wheel should not scroll entire page
+mouse_list_scroll_whole_page = no
+
+display_volume_level = yes
+ignore_leading_the = yes
+#display_screens_numbers_on_start = no
+mpd_music_dir = "/mnt/nfs/nas01/media/music/"
+
+visualizer_fifo_path = "/tmp/mpd.fifo"
+visualizer_output_name = "my_fifo"
+visualizer_sync_interval = "30"
+visualizer_in_stereo = "yes"
+visualizer_type = "wave" (spectrum/wave)
+#visualizer_type = "spectrum" (spectrum/wave)`
+visualizer_look = "+|"
