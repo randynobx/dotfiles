@@ -22,6 +22,8 @@
     set hlsearch    " highlight matches
     " turn off search highlight
       nnoremap <leader><space> :nohlsearch<CR>
+    "let g:ackprg = 'ag --nogroup --nocolor --column'
+    let g:ackprg = 'ag --vimgrep'
 
 " Folding
     set foldenable  " enable folding
