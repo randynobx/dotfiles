@@ -50,3 +50,20 @@
 " vim-latexsuite plugin
     set grepprg=grep\ -nH\ $*
     let g:tex_flavor = "latex"
+
+" Splits
+    " Navigation using Ctrl+j, etc
+    nnoremap <C-J> <C-W><C-J>
+    nnoremap <C-K> <C-W><C-K>
+    nnoremap <C-L> <C-W><C-L>
+    nnoremap <C-H> <C-W><C-H>
+
+    " Open new panes to the right and bottom
+    set splitbelow
+    set splitright
+
+    "Swap top/bottom or left/right split
+    Ctrl+W R
+    "
+    "Break out current window into a new tabview
+    Ctrl+W T
