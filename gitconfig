@@ -1,8 +1,8 @@
 [user]
-	name = randnobx
-	email = randynobx@gmail.com
+    name = randnobx
+    email = randynobx@gmail.com
 [push]
-	default = simple
+    default = simple
 [core]
     editor = vim
     pager = less
