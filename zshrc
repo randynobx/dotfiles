@@ -172,6 +172,16 @@ up() {
     cd $x
 }
 
+# start new ranger instance only if not already running in current shell
+rg() {
+    if [ -z "$RANGER_LEVEL" ]
+    then
+        ranger
+    else
+        exit
+    fi
+}
+
 ### End Functions ###
 
 ### Git branch info ###
