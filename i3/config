@@ -82,9 +82,6 @@ bindsym $mod+o scratchpad show
 # screenshot with PrintScrn
 bindsym Print exec /usr/bin/scrot
 
-# lock screen with i3lock [-d to disable screen on lock] [-i for custom bg image]
-bindsym Ctrl+$mod+l exec i3lock --ignore-empty-password --color=3f3f3f #-i /home/randy/pictures/lockscreen.png
-
 # start a terminal
 bindsym $mod+Return exec termite
 
@@ -261,7 +258,9 @@ bar {
 exec feh --bg-scale ~/pictures/wallpapers/desktop_background.jpg
 
 # System lock/logout/suspend/hibernate/reboot/shutdown
-set $Locker i3lock && sleep 1
+set $Locker i3lock --ignore-empty-password --color=3f3f3f && sleep 1
+bindsym Ctrl+$mod+l exec $Locker
+
 
 set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (Shift+s) shutdown
 mode "$mode_system" {
