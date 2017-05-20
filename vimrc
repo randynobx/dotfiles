@@ -17,6 +17,17 @@
     set wildmenu    " visual autocomplete for command menu
     set showmatch   " highlight matching [{()}]
 
+" Splits
+    " Navigation using Ctrl+j, etc
+    nnoremap <C-J> <C-W><C-J>
+    nnoremap <C-K> <C-W><C-K>
+    nnoremap <C-L> <C-W><C-L>
+    nnoremap <C-H> <C-W><C-H>
+
+    " Open new panes to the right and bottom
+    set splitbelow
+    set splitright
+
 " Statusline
     set laststatus=2    "always show status bar
 
@@ -44,6 +55,12 @@
     set statusline+=\ %l:%c
     set statusline+=\ 
 
+" Leader
+    let mapleader=","   " leader is comma
+    " swap : and ; to make colon commands easier to type
+    nnoremap  ;  :
+    "nnoremap  :  ;
+
 " Searching
     set incsearch   " search as characters are entered
     set hlsearch    " highlight matches
@@ -60,12 +77,6 @@
       nnoremap <space> za
     set foldmethod=indent   " fold based on indent level
 
-" Leader
-    let mapleader=","   " leader is comma
-    " swap : and ; to make colon commands easier to type
-    nnoremap  ;  :
-    "nnoremap  :  ;
-
 " Misc
     set encoding=utf-8  " set encoding to utf-8
     " highlight last inserted text
@@ -80,13 +91,17 @@
     set grepprg=grep\ -nH\ $*
     let g:tex_flavor = "latex"
 
-" Splits
-    " Navigation using Ctrl+j, etc
-    nnoremap <C-J> <C-W><C-J>
-    nnoremap <C-K> <C-W><C-K>
-    nnoremap <C-L> <C-W><C-L>
-    nnoremap <C-H> <C-W><C-H>
+" Vimux plugin
+    " Prompt for a command to run map
+    map <Leader>vp :VimuxPromptCommand<CR>
+    map <Leader>vm :VimuxPromptCommand("make ")<CR>
+    " Inspect runner pane map
+    map <Leader>vi :VimuxInspectRunner<CR>
+    " Interrupt any command running in the runner pane map
+    map <Leader>vs :VimuxInterruptRunner<CR>
+    " Run last command
+    map <Leader>vl :VimuxRunLastCommand<CR>
+    " Close vim tmux runner opened by VimuxRunCommand
+    map <Leader>vq :VimuxCloseRunner<CR>
 
-    " Open new panes to the right and bottom
-    set splitbelow
-    set splitright
+    let VimuxUseNearest = 1
