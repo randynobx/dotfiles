@@ -1,3 +1,5 @@
+# Fig pre block. Keep at the top of this file.
+[[ -f "$HOME/.fig/shell/zshrc.pre.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.pre.zsh"
 ################################################################################
 ## .zshrc - ZSH configuration
 ## author: randynobx <randynobx@gmail.com>
@@ -50,17 +52,16 @@ zstyle ':completion:*:kill:*' force-list always
 # directory colors
 if [ "$TERM" != "dumb" ]; then
     # directory colors
-    eval `dircolors -b`
     alias ls='ls --color=auto -F'
     alias dir='ls --color=auto -F'
 
-    # grep color
+   # grep color
     export GREP_COLOR="1;33"
     alias grep='grep --color=auto'
 fi
 
 # Zenburn colors for console
- if [ "$TERM" = "linux" ]; then
+ if [ "$TERM" = "xterm-256color" ]; then
      echo -en "\e]P03f3f3f" # zenburn black (normal black)
      echo -en "\e]P8709080" # bright-black (darkgrey)
      echo -en "\e]P1705050" # red (darkred)
@@ -82,17 +83,6 @@ fi
 ### End Terminal colors ###
 
 
-### Window title ###
-
-# user@host:dir
-case "$TERM" in
-    xterm*|rxvt*)
-    precmd () {print -Pn "\e]0;%n@%m: %~\a"}
-        ;;
-esac
-
-### End Window title ###
-
 ### Prompt ###
 
 MAIN_COLOR=$'%{\e[1;30m%}'
@@ -101,7 +91,7 @@ HOST_COLOR=$'%{\e[1;36m%}'
 DIR_COLOR=$'%{\e[0;37m%}'
 RESET_COLOR=$'%{\e[0;00m%}'
 
-randy=1000
+randy=501
 root=0
 if [ $(id -u) -eq $randy ]; then    # Green if user is randy
    USER_COLOR=$'%{\e[1;32m%}'
@@ -111,7 +101,7 @@ else                                # Yellow if user is anyone else
    USER_COLOR=$'%{\e[1;33m%}'
 fi
 
-export PROMPT="$MAIN_COLOR($RESET_COLOR%!:$USER_COLOR%n$RESET_COLOR@$HOST_COLOR%m$MAIN_COLOR|$DIR_COLOR%~$MAIN_COLOR)$USER_COLOR%#$RESET_COLOR "
+export PROMPT="$MAIN_COLOR($USER_COLOR%n$MAIN_COLOR|$DIR_COLOR%1~$MAIN_COLOR)$USER_COLOR%#$RESET_COLOR "
 export PROMPT2="$MAIN_COLOR... $RESET_COLOR"
 
 ### End Prompt ###
@@ -119,13 +109,14 @@ export PROMPT2="$MAIN_COLOR... $RESET_COLOR"
 
 ### Variables ###
 
-export BROWSER=firefox
-export EDITOR=vim
+export BROWSER=chrome
+#export EDITOR=vim
+export EDITOR="/usr/local/bin/mate -w"
 export PAGER=less
 export LESS="-R -iMx4"
 
 # ensure terminal type is set properly for color-capable terminals
-if [[ "$COLORTERM" == "gnome-terminal" ]] || [[ "$COLORTERM" == "Terminal" ]] || [[ "$COLORTERM" == "roxterm" ]]; then
+if [[ "$COLORTERM" == "truecolor" ]] || [[ "$COLORTERM" == "Terminal" ]] || [[ "$COLORTERM" == "roxterm" ]]; then
    # make sure $TERM is xterm-256color if the terminal supports 256 colors
    export TERM=xterm-256color
 fi
@@ -143,21 +134,11 @@ alias h='history'
 alias j='jobs'
 alias p='pinky'
 
+alias python='python3'
+
 alias ll='ls -lh'
 alias la='ls -Ah'
 alias lla='ls -lAh'
-alias privatize='chmod go-rwx'
-
-alias tasks='clear;task log; task summary'
-alias pdf='mupdf %s & disown'
-
-## Arch Linux pacman aliases
-alias pacman='pacman --color auto'
-alias pacaur='pacaur --color auto'
-alias pacs='pacaur -Ss'
-alias pacq='pacaur -Qi'
-alias paci='pacaur -S'
-alias pacu='pacaur -Syu'
 
 ### End Aliases ###
 
@@ -229,5 +210,26 @@ RPROMPT=$'$(vcs_info_wrapper)'
 export PATH=$PATH:$HOME/bin/:$HOME/.gem/ruby/2.2.0/bin
 
 ### Source fzf files
-source /usr/share/fzf/key-bindings.zsh
-source /usr/share/fzf/completion.zsh
+#source /usr/share/fzf/key-bindings.zsh
+#source /usr/share/fzf/completion.zsh
+
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/Users/randy/opt/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/Users/randy/opt/anaconda3/etc/profile.d/conda.sh" ]; then
+        . "/Users/randy/opt/anaconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/Users/randy/opt/anaconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
+export PATH="/usr/local/opt/openjdk@8/bin:$PATH"
+
+# Fig post block. Keep at the bottom of this file.
+[[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"
