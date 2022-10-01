@@ -10,7 +10,13 @@ setopt interactive_comments
 
 # use VI keybindings
 bindkey -v
-bindkey '^R' history-incremental-search-backward
+
+# Prefer fzf for search, fallback to built-in if missing
+if (( $+commands[fzf] )); then
+    source <(fzf --zsh)
+else
+    bindkey '^R' history-incremental-search-backward
+fi
 
 ### End Misc ###
 
@@ -29,8 +35,6 @@ setopt hist_ignore_space
 
 ### Auto completion ###
 
-zstyle :compinstall filename "$HOME/.zshrc"
-
 autoload -Uz compinit && compinit
 
 # allow approximate
@@ -47,88 +51,46 @@ zstyle ':completion:*:kill:*' force-list always
 
 ### Terminal colors ###
 
-# directory colors
-if [ "$TERM" != "dumb" ]; then
-    # directory colors
-    eval `dircolors -b`
+if [[ "$TERM" != "dumb" ]]; then
     alias ls='ls --color=auto -F'
     alias dir='ls --color=auto -F'
-
-    # grep color
     export GREP_COLOR="1;33"
     alias grep='grep --color=auto'
 fi
 
-# Zenburn colors for console
- if [ "$TERM" = "linux" ]; then
-     echo -en "\e]P03f3f3f" # zenburn black (normal black)
-     echo -en "\e]P8709080" # bright-black (darkgrey)
-     echo -en "\e]P1705050" # red (darkred)
-     echo -en "\e]P9dca3a3" # bright-red (red)
-     echo -en "\e]P260b48a" # green (darkgreen)
-     echo -en "\e]PAc3bf9f" # bright-green (green)
-     echo -en "\e]P3dfaf8f" # yellow (brown)
-     echo -en "\e]PBf0dfaf" # bright-yellow (yellow)
-     echo -en "\e]P4506070" # blue (darkblue)
-     echo -en "\e]PC94bff3" # bright-blue (blue)
-     echo -en "\e]P5dc8cc3" # purple (darkmagenta)
-     echo -en "\e]PDec93d3" # bright-purple (magenta)
-     echo -en "\e]P68cd0d3" # cyan (darkcyan)
-     echo -en "\e]PE93e0e3" # bright-cyan (cyan)
-     echo -en "\e]P7dcdccc" # white (lightgrey)
-     echo -en "\e]PFffffff" # bright-white (white)
- fi
-
 ### End Terminal colors ###
 
 
-### Window title ###
+### Prompt ###
+# %F{n} = palette color n, %B/%b = bold on/off, %f = default color.
+# zsh knows these take no screen width, so no %{ %} wrappers needed.
 
-# user@host:dir
-case "$TERM" in
-    xterm*|rxvt*)
-    precmd () {print -Pn "\e]0;%n@%m: %~\a"}
-        ;;
+MAIN_COLOR='%B%F{8}'    # bright black (Zenburn grey-green)
+HOST_COLOR='%B%F{6}'    # cyan
+DIR_COLOR='%b%F{7}'     # light grey, not bold
+RESET_COLOR='%b%f'
+
+case $USER in
+    randy) USER_COLOR='%B%F{2}' ;;   # green for randy
+    root)   USER_COLOR='%B%F{1}' ;;   # red for root
+    *)   USER_COLOR='%B%F{3}' ;;   # yellow for anyone else
 esac
 
-### End Window title ###
-
-### Prompt ###
-
-MAIN_COLOR=$'%{\e[1;30m%}'
-#USER_COLOR=$'%{\e[1;32m%}' ## This line is not necessary as USER_COLOR will be set below depending on current user
-HOST_COLOR=$'%{\e[1;36m%}'
-DIR_COLOR=$'%{\e[0;37m%}'
-RESET_COLOR=$'%{\e[0;00m%}'
-
-randy=1000
-root=0
-if [ $(id -u) -eq $randy ]; then    # Green if user is randy
-   USER_COLOR=$'%{\e[1;32m%}'
-elif [ $(id -u) -eq $root ]; then   # Red if user is root
-   USER_COLOR=$'%{\e[1;31m%}'
-else                                # Yellow if user is anyone else
-   USER_COLOR=$'%{\e[1;33m%}'
-fi
-
-export PROMPT="$MAIN_COLOR($RESET_COLOR%!:$USER_COLOR%n$RESET_COLOR@$HOST_COLOR%m$MAIN_COLOR|$DIR_COLOR%~$MAIN_COLOR)$USER_COLOR%#$RESET_COLOR "
-export PROMPT2="$MAIN_COLOR... $RESET_COLOR"
+PROMPT="${MAIN_COLOR}(${USER_COLOR}%n${MAIN_COLOR}@${HOST_COLOR}%m${MAIN_COLOR}|${DIR_COLOR}%1~${MAIN_COLOR})${USER_COLOR}%#${RESET_COLOR} "
+PROMPT2="${MAIN_COLOR}... ${RESET_COLOR}"
 
 ### End Prompt ###
 
 
 ### Variables ###
-
-export BROWSER=firefox
-export EDITOR=vim
+if [[ $OSTYPE == darwin* ]]; then
+    export EDITOR="/usr/local/bin/mate -w"
+    export BROWSER=brave
+else
+    export EDITOR=vim
+fi
 export PAGER=less
 export LESS="-R -iMx4"
-
-# ensure terminal type is set properly for color-capable terminals
-if [[ "$COLORTERM" == "gnome-terminal" ]] || [[ "$COLORTERM" == "Terminal" ]] || [[ "$COLORTERM" == "roxterm" ]]; then
-   # make sure $TERM is xterm-256color if the terminal supports 256 colors
-   export TERM=xterm-256color
-fi
 
 if [ -n "$TMUX" ]; then
    # set $TERM for tmux
@@ -143,21 +105,12 @@ alias h='history'
 alias j='jobs'
 alias p='pinky'
 
+alias python='python3'
+alias pip='pip3'
+
 alias ll='ls -lh'
 alias la='ls -Ah'
 alias lla='ls -lAh'
-alias privatize='chmod go-rwx'
-
-alias tasks='clear;task log; task summary'
-alias pdf='mupdf %s & disown'
-
-## Arch Linux pacman aliases
-alias pacman='pacman --color auto'
-alias pacaur='pacaur --color auto'
-alias pacs='pacaur -Ss'
-alias pacq='pacaur -Qi'
-alias paci='pacaur -S'
-alias pacu='pacaur -Syu'
 
 ### End Aliases ###
 
@@ -173,7 +126,7 @@ up() {
 }
 
 # start new ranger instance only if not already running in current shell
-rg() {
+ra() {
     if [ -z "$RANGER_LEVEL" ]
     then
         ranger
@@ -219,15 +172,11 @@ zstyle ':vcs_info:git*+set-message:*' hooks git-untracked
 vcs_info_wrapper() {
   vcs_info
   if [ -n "$vcs_info_msg_0_" ]; then
-    echo "%{$fg[grey]%}${vcs_info_msg_0_}%{$reset_color%}$del"
+    echo "${vcs_info_msg_0_}"
   fi
 }
 RPROMPT=$'$(vcs_info_wrapper)'
 
 ### End Git branch info ###
 
-export PATH=$PATH:$HOME/bin/:$HOME/.gem/ruby/2.2.0/bin
-
-### Source fzf files
-source /usr/share/fzf/key-bindings.zsh
-source /usr/share/fzf/completion.zsh
+export PATH=$PATH:$HOME/bin/

@@ -12,6 +12,7 @@ from ranger.api.commands import *
 
 # You can import any python module as needed.
 import os
+import re
 
 # Any class that is a subclass of "Command" will be integrated into ranger as a
 # command.  Try typing ":my_edit<ENTER>" in ranger!
@@ -75,11 +76,11 @@ class fzf_select(Command):
         import subprocess
         if self.quantifier:
             # match only directories
-            command="find -L . \( -path '*/\.*' -o -fstype 'dev' -o -fstype 'proc' \) -prune \
+            command="find -L . \\( -path '*/\\.*' -o -fstype 'dev' -o -fstype 'proc' \\) -prune \
             -o -type d -print 2> /dev/null | sed 1d | cut -b3- | fzf +m"
         else:
             # match files and directories
-            command="find -L . \( -path '*/\.*' -o -fstype 'dev' -o -fstype 'proc' \) -prune \
+            command="find -L . \\( -path '*/\\.*' -o -fstype 'dev' -o -fstype 'proc' \\) -prune \
             -o -print 2> /dev/null | sed 1d | cut -b3- | fzf +m"
         fzf = self.fm.execute_command(command, stdout=subprocess.PIPE)
         stdout, stderr = fzf.communicate()
