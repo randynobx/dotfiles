@@ -27,4 +27,5 @@ alias gl='git log --oneline --graph --decorate -20' # last 20 commits as a graph
 alias gp='git push'                                # push current branch
 alias gpf='git push --force-with-lease'            # safe force-push
 alias gpl='git pull'                               # pull (fast-forward only)
+alias gst='git stash'                              # stash uncommitted changes
 alias gsw='git switch'                             # switch branches

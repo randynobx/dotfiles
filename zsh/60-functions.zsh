@@ -9,6 +9,9 @@ up() {
     cd $x
 }
 
+# mkcd <dir>: make a directory and cd into it
+mkcd() { mkdir -p $1 && cd $1 }
+
 # ra: start ranger, or return to it if this shell is already inside one
 ra() {
     if [[ -z $RANGER_LEVEL ]]; then
