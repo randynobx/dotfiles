@@ -1,7 +1,18 @@
 #!/usr/bin/env bash
 # install.sh - symlink dotfiles into $HOME and fetch vim plugins.
 # Safe to re-run. Existing real files are moved aside to *.bak.<timestamp>.
+# What gets linked where is listed in ./links (shared with the homelab Ansible role).
+#
+# usage: install.sh          link everything, fetch vim plugins
+#        install.sh --core   link only "core" entries, no plugins (server-style)
 set -euo pipefail
+
+CORE_ONLY=false
+case "${1:-}" in
+    --core) CORE_ONLY=true ;;
+    "") ;;
+    *) echo "usage: $0 [--core]" >&2; exit 2 ;;
+esac
 
 DOTFILES="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 STAMP="$(date +%Y%m%d%H%M%S)"
@@ -20,16 +31,13 @@ link() {
     echo "linked  $dst -> $src"
 }
 
-link zshrc     "$HOME/.zshrc"
-link zprofile  "$HOME/.zprofile"
-link bashrc    "$HOME/.bashrc"
-link vimrc     "$HOME/.vimrc"
-link vim       "$HOME/.vim"
-link tmux.conf "$HOME/.tmux.conf"
-link gitconfig "$HOME/.gitconfig"
-link gitignore_global "${XDG_CONFIG_HOME:-$HOME/.config}/git/ignore"
-link ranger    "${XDG_CONFIG_HOME:-$HOME/.config}/ranger"
-link ghostty   "${XDG_CONFIG_HOME:-$HOME/.config}/ghostty"
+while read -r src dst profile; do
+    [[ -z $src || $src == \#* ]] && continue
+    $CORE_ONLY && [[ $profile != core ]] && continue
+    link "$src" "$HOME/$dst"
+done < "$DOTFILES/links"
+
+$CORE_ONLY && exit 0
 
 # vim plugins (native packages, gitignored)
 plug() {

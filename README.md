@@ -2,6 +2,9 @@
 
 Personal shell and terminal configs for macOS and Linux.
 
+The authoritative list is [`links`](links), which `install.sh` and the homelab
+Ansible role both read. To add a dotfile, add one line there.
+
 | File | Target |
 |---|---|
 | `zprofile` | `~/.zprofile` (Homebrew PATH; login shells only) |
@@ -17,11 +20,14 @@ Personal shell and terminal configs for macOS and Linux.
 ## Install
 
 ```sh
-git clone https://github.com/randynobx/dotfiles.git ~/GitHub/dotfiles
-~/GitHub/dotfiles/install.sh
+git clone https://github.com/randynobx/dotfiles.git ~/Projects/dotfiles
+~/Projects/dotfiles/install.sh
 ```
 
-The script symlinks each file into place (backing up anything already there to
+`install.sh --core` links only the shell, vim, tmux and git files and skips
+plugins, which is what servers get.
+
+The script symlinks each file listed in `links` into place (backing up anything already there to
 `*.bak.<timestamp>`) and clones vim plugins into `vim/pack/`. Re-run it to
 update plugins.
 
