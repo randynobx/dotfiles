@@ -1,8 +1,9 @@
-### Prompt ###
+# .bashrc - bash configuration (kept in step with zshrc)
 
-ROOT=0
-randy=1000
-ID=$(id | cut -d'=' -f2 | cut -d'(' -f1)
+# only run for interactive shells
+[[ $- != *i* ]] && return
+
+### Prompt ###
 
 OFF="\[\033[00m\]"
 GREY="\[\033[01;30m\]"
@@ -14,13 +15,11 @@ PINK="\[\033[01;35m\]"
 TEAL="\[\033[01;36m\]"
 WHITE="\[\033[01;37m\]"
 
-if [ "${ID}" == ${randy} ] ; then
-    COLOR=${GREEN}
-else if [ "${ID}" == "${ROOT}" ] ; then
-    COLOR=${RED}
-else
-    COLOR=${YELLOW}
-fi fi
+case $USER in
+    randy) COLOR=${GREEN} ;;   # green for randy
+    root)  COLOR=${RED} ;;     # red for root
+    *)     COLOR=${YELLOW} ;;  # yellow for anyone else
+esac
 
 export PS1="\!:${COLOR}\u${OFF}@${TEAL}\h${OFF}:\W${COLOR}\$${OFF} "
 
@@ -40,10 +39,7 @@ export HISTSIZE=10000
 export HISTFILESIZE=10000
 export HISTTIMEFORMAT="%Y/%m/%d %H:%M:%S "
 
-# don't put duplicate lines in the history. See bash(1) for more options
-# don't overwrite GNU Midnight Commander's setting of `ignorespace'.
-export HISTCONTROL=$HISTCONTROL${HISTCONTROL+,}ignoredups
-# ... or force ignoredups and ignorespace
+# ignore duplicate lines and lines starting with a space
 export HISTCONTROL=ignoreboth
 
 # append to the history file, don't overwrite it
@@ -53,8 +49,8 @@ shopt -s histappend
 
 ### Color modes ###
 
-alias ls='ls --color=auto '
-alias grep='grep --color=auto '
+alias ls='ls --color=auto -F'
+alias grep='grep --color=auto'
 
 ### End Color modes ###
 
@@ -62,18 +58,11 @@ alias grep='grep --color=auto '
 
 alias h='history'
 alias j='jobs'
-alias p='pinky'
-alias ls='ls -F'
-alias ll='ls -lF'
-alias la='ls -AF'
-alias lla='ls -lAF'
+alias ll='ls -lh'
+alias la='ls -Ah'
+alias lla='ls -lAh'
 
 ### End Aliases
-
-if [ -n "$TMUX" ]; then
-    # set $TERM for tmux
-    export TERM=screen-256color
-fi
 
 ### Functions ###
 

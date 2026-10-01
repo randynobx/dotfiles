@@ -11,13 +11,6 @@ setopt interactive_comments
 # use VI keybindings
 bindkey -v
 
-# Prefer fzf for search, fallback to built-in if missing
-if (( $+commands[fzf] )); then
-    source <(fzf --zsh)
-else
-    bindkey '^R' history-incremental-search-backward
-fi
-
 ### End Misc ###
 
 
@@ -46,6 +39,16 @@ zstyle ':completion:*:approximate:*' max-errors 1 numeric
 zstyle ':completion:*:*:kill:*' menu yes select
 zstyle ':completion:*:kill:*' force-list always
 
+# Prefer fzf for search, fallback to built-in if missing
+# (sourced after compinit so fzf's completion hooks register)
+if (( $+commands[fzf] )); then
+    source <(fzf --zsh)
+    export FZF_TMUX=1
+    export FZF_TMUX_HEIGHT=20
+else
+    bindkey '^R' history-incremental-search-backward
+fi
+
 ### End Auto completion ###
 
 
@@ -54,7 +57,7 @@ zstyle ':completion:*:kill:*' force-list always
 if [[ "$TERM" != "dumb" ]]; then
     alias ls='ls --color=auto -F'
     alias dir='ls --color=auto -F'
-    export GREP_COLOR="1;33"
+    export GREP_COLORS="mt=1;33"
     alias grep='grep --color=auto'
 fi
 
@@ -84,7 +87,11 @@ PROMPT2="${MAIN_COLOR}... ${RESET_COLOR}"
 
 ### Variables ###
 if [[ $OSTYPE == darwin* ]]; then
-    export EDITOR="/usr/local/bin/mate -w"
+    if (( $+commands[mate] )); then
+        export EDITOR="${commands[mate]} -w"
+    else
+        export EDITOR=vim
+    fi
     export BROWSER=brave
 else
     export EDITOR=vim
@@ -92,18 +99,12 @@ fi
 export PAGER=less
 export LESS="-R -iMx4"
 
-if [ -n "$TMUX" ]; then
-   # set $TERM for tmux
-   export TERM=screen-256color
-fi
-
 ### End Variables ###
 
 
 ### Aliases ###
 alias h='history'
 alias j='jobs'
-alias p='pinky'
 
 alias python='python3'
 alias pip='pip3'
@@ -168,15 +169,11 @@ zstyle ':vcs_info:git*+set-message:*' hooks git-untracked
     fi
 }
 
-# or use pre_cmd, see man zshcontrib
-vcs_info_wrapper() {
-  vcs_info
-  if [ -n "$vcs_info_msg_0_" ]; then
-    echo "${vcs_info_msg_0_}"
-  fi
-}
-RPROMPT=$'$(vcs_info_wrapper)'
+# refresh vcs_info once per prompt via precmd (no subshell per prompt)
+autoload -Uz add-zsh-hook
+add-zsh-hook precmd vcs_info
+RPROMPT='${vcs_info_msg_0_}'
 
 ### End Git branch info ###
 
-export PATH=$PATH:$HOME/bin/
+export PATH="$PATH:$HOME/bin"

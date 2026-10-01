@@ -1,0 +1,16 @@
+# ranger runtime state
+ranger/bookmarks
+ranger/tagged
+ranger/history
+ranger/__pycache__/
+
+# vim plugins installed by install.sh
+vim/pack/
+
+# editor / OS cruft
+*.swp
+*.swo
+*~
+.DS_Store
+__pycache__/
+*.log

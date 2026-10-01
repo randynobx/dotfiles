@@ -1,3 +1,16 @@
+" Leader (must be set before any <leader> mappings)
+    let mapleader=","   " leader is comma
+
+" Plugins
+    " fzf.vim needs the base fzf plugin on the runtimepath
+    for s:fzfdir in ['/opt/homebrew/opt/fzf', '/usr/local/opt/fzf', '/usr/share/doc/fzf/examples', expand('~/.fzf')]
+        if isdirectory(s:fzfdir)
+            execute 'set rtp+=' . s:fzfdir
+            break
+        endif
+    endfor
+    packloadall     " load vim/pack/*/start/* (fzf.vim; installed by install.sh)
+
 " Colors
     syntax enable   " enable syntax processing
     "set background=dark " for [dark|light] bg if using solarized
@@ -22,8 +35,6 @@
     set hlsearch    " highlight matches
     " turn off search highlight
       nnoremap <leader><space> :nohlsearch<CR>
-    "let g:ackprg = 'ag --nogroup --nocolor --column'
-    let g:ackprg = 'ag --vimgrep'
 
 " Folding
     set foldenable  " enable folding
@@ -33,8 +44,7 @@
       nnoremap <space> za
     set foldmethod=indent   " fold based on indent level
 
-" Leader
-    let mapleader=","   " leader is comma
+" Command-line
     " swap : and ; to make colon commands easier to type
     nnoremap  ;  :
     "nnoremap  :  ;
