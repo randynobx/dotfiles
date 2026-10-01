@@ -26,5 +26,5 @@ update plugins.
 ## Dependencies
 
 [fzf](https://github.com/junegunn/fzf), [ripgrep](https://github.com/BurntSushi/ripgrep),
-[ranger](https://github.com/ranger/ranger), tmux, [git-lfs](https://git-lfs.com). Everything degrades gracefully
+[ranger](https://github.com/ranger/ranger), tmux. Everything degrades gracefully
 if one is missing.

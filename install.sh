@@ -41,6 +41,6 @@ plug() {
 plug junegunn/fzf.vim
 
 # reminders for tools the configs expect
-for cmd in fzf rg ranger tmux git-lfs; do
+for cmd in fzf rg ranger tmux; do
     command -v "$cmd" >/dev/null || echo "note: '$cmd' not found - install it for full functionality"
 done
