@@ -58,4 +58,6 @@ class rg(Command):
         marked = self.fm.thisdir.marked_items
         if marked:
             cmd += ['--'] + [f.relative_path for f in marked]
-        self.fm.execute_command(cmd, flags='p')
+        # pipe through less -R ourselves so colours render whatever $LESS is
+        shell_cmd = ' '.join(shlex.quote(c) for c in cmd) + ' | less -R'
+        self.fm.execute_command(shell_cmd)

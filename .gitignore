@@ -3,6 +3,7 @@ ranger/bookmarks
 ranger/tagged
 ranger/history
 ranger/__pycache__/
+ranger/colorschemes/__init__.py
 
 # vim plugins installed by install.sh
 vim/pack/

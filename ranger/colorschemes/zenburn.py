@@ -1,12 +1,12 @@
 # Ivaylo Kuzev <ivkuzev@gmail.com>, 2014
-# Zenburn like colorscheme for https://github.com/hut/ranger .
+# Zenburn like colorscheme for https://github.com/ranger/ranger (updated for 1.9.4).
 
 # default colorscheme.
 # Copyright (C) 2009-2013  Roman Zimbelmann <hut@lepus.uberspace.de>
 # This software is distributed under the terms of the GNU GPL version 3.
 
 from ranger.gui.colorscheme import ColorScheme
-from ranger.gui.color import *
+from ranger.gui.color import default, normal, bold, reverse, default_colors
 
 class Zenburn(ColorScheme):
     progress_bar_color = 108
@@ -78,6 +78,8 @@ class Zenburn(ColorScheme):
                     bg = 95
                 else:
                     fg = 95
+            if context.inactive_pane:
+                fg = 116
 
         elif context.in_titlebar:
             attr |= bold
@@ -104,6 +106,9 @@ class Zenburn(ColorScheme):
                 if context.bad:
                     attr |= bold
                     fg = 174
+            if context.frozen:
+                attr |= bold | reverse
+                fg = 116
             if context.loaded:
                 bg = self.progress_bar_color
             if context.vcsinfo:
@@ -112,7 +117,9 @@ class Zenburn(ColorScheme):
             if context.vcscommit:
                 fg = 144
                 attr &= ~bold
-
+            if context.vcsdate:
+                fg = 116
+                attr &= ~bold
 
         if context.text:
             if context.highlight:
@@ -140,6 +147,8 @@ class Zenburn(ColorScheme):
                 fg = 174
             elif context.vcsunknown:
                 fg = 174
+            elif context.vcsuntracked:
+                fg = 116
             elif context.vcsstaged:
                 fg = 108
             elif context.vcssync:
@@ -149,7 +158,7 @@ class Zenburn(ColorScheme):
 
         elif context.vcsremote and not context.selected:
             attr &= ~bold
-            if context.vcssync:
+            if context.vcssync or context.vcsnone:
                 fg = 108
             elif context.vcsbehind:
                 fg = 174
