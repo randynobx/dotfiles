@@ -8,6 +8,7 @@ Personal shell and terminal configs for macOS and Linux.
 | `bashrc` | `~/.bashrc` |
 | `vimrc`, `vim/` | `~/.vimrc`, `~/.vim` |
 | `tmux.conf` | `~/.tmux.conf` (tmux ≥ 3.2) |
+| `gitconfig` | `~/.gitconfig` |
 | `ranger/` | `~/.config/ranger` |
 | `ghostty/` | `~/.config/ghostty` |
 
@@ -25,5 +26,5 @@ update plugins.
 ## Dependencies
 
 [fzf](https://github.com/junegunn/fzf), [ripgrep](https://github.com/BurntSushi/ripgrep),
-[ranger](https://github.com/ranger/ranger), tmux. Everything degrades gracefully
+[ranger](https://github.com/ranger/ranger), tmux, [git-lfs](https://git-lfs.com). Everything degrades gracefully
 if one is missing.

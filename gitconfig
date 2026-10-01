@@ -1,0 +1,32 @@
+# ~/.gitconfig - global git settings (linked by install.sh)
+
+[user]
+    name = Randy Nance
+    email = randynobx@gmail.com
+
+[init]
+    defaultBranch = main        # new repos start on main, not master
+
+[pull]
+    ff = only                   # pull never creates surprise merge commits
+
+[push]
+    autoSetupRemote = true      # first push of a new branch sets upstream (git >= 2.37)
+
+[fetch]
+    prune = true                # drop local refs to branches deleted on the remote
+
+[rebase]
+    autoStash = true            # rebase works with uncommitted changes
+
+[merge]
+    conflictStyle = diff3       # conflicts also show the original text
+
+[diff]
+    algorithm = histogram       # cleaner, more readable diffs
+
+[filter "lfs"]
+    process = git-lfs filter-process
+    required = true
+    clean = git-lfs clean -- %f
+    smudge = git-lfs smudge -- %f

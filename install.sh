@@ -25,6 +25,7 @@ link bashrc    "$HOME/.bashrc"
 link vimrc     "$HOME/.vimrc"
 link vim       "$HOME/.vim"
 link tmux.conf "$HOME/.tmux.conf"
+link gitconfig "$HOME/.gitconfig"
 link ranger    "${XDG_CONFIG_HOME:-$HOME/.config}/ranger"
 link ghostty   "${XDG_CONFIG_HOME:-$HOME/.config}/ghostty"
 
@@ -40,6 +41,6 @@ plug() {
 plug junegunn/fzf.vim
 
 # reminders for tools the configs expect
-for cmd in fzf rg ranger tmux; do
+for cmd in fzf rg ranger tmux git-lfs; do
     command -v "$cmd" >/dev/null || echo "note: '$cmd' not found - install it for full functionality"
 done
