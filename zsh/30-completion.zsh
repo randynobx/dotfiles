@@ -15,6 +15,11 @@ zstyle ':completion:*:kill:*' force-list always
 # completion hooks register); fall back to built-in history search
 if (( $+commands[fzf] )); then
     source <(fzf --zsh)
+    # use ripgrep to list files: faster, and skips anything gitignored
+    if (( $+commands[rg] )); then
+        export FZF_DEFAULT_COMMAND='rg --files --hidden --glob "!.git"'
+        export FZF_CTRL_T_COMMAND=$FZF_DEFAULT_COMMAND
+    fi
     export FZF_TMUX=1
     export FZF_TMUX_HEIGHT=20
 else

@@ -1,0 +1,21 @@
+# Global gitignore - applies to every repo (linked to ~/.config/git/ignore)
+# Repo-specific ignores still go in each repo's own .gitignore.
+
+# macOS
+.DS_Store
+._*
+
+# editors
+*.swp
+*.swo
+*~
+.idea/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+
+# local secrets: never commit env files by accident (`git add -f` overrides)
+.env
+.env.local

@@ -21,11 +21,13 @@ link() {
 }
 
 link zshrc     "$HOME/.zshrc"
+link zprofile  "$HOME/.zprofile"
 link bashrc    "$HOME/.bashrc"
 link vimrc     "$HOME/.vimrc"
 link vim       "$HOME/.vim"
 link tmux.conf "$HOME/.tmux.conf"
 link gitconfig "$HOME/.gitconfig"
+link gitignore_global "${XDG_CONFIG_HOME:-$HOME/.config}/git/ignore"
 link ranger    "${XDG_CONFIG_HOME:-$HOME/.config}/ranger"
 link ghostty   "${XDG_CONFIG_HOME:-$HOME/.config}/ghostty"
 

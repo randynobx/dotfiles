@@ -4,11 +4,13 @@ Personal shell and terminal configs for macOS and Linux.
 
 | File | Target |
 |---|---|
+| `zprofile` | `~/.zprofile` (Homebrew PATH; login shells only) |
 | `zshrc`, `zsh/` | `~/.zshrc` (a small loader that sources `zsh/*.zsh` in order) |
 | `bashrc` | `~/.bashrc` |
 | `vimrc`, `vim/` | `~/.vimrc`, `~/.vim` |
 | `tmux.conf` | `~/.tmux.conf` (tmux ≥ 3.2) |
 | `gitconfig` | `~/.gitconfig` |
+| `gitignore_global` | `~/.config/git/ignore` (ignored in every repo) |
 | `ranger/` | `~/.config/ranger` |
 | `ghostty/` | `~/.config/ghostty` |
 
