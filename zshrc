@@ -19,6 +19,11 @@ bindkey -v
 HISTFILE=~/.zsh_history
 HISTSIZE=50000
 SAVEHIST=50000
+# only archive commands with arguments; bare commands (ls, clear, htop...)
+# stay usable with ↑ this session but aren't written to the history file
+zshaddhistory() {
+    [[ ${1%%$'\n'} == *' '* ]] || return 2
+}
 setopt inc_append_history
 setopt hist_ignore_dups
 setopt hist_ignore_space
