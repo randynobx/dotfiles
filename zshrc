@@ -19,7 +19,7 @@ bindkey -v
 HISTFILE=~/.zsh_history
 HISTSIZE=50000
 SAVEHIST=50000
-setopt appendhistory
+setopt inc_append_history
 setopt hist_ignore_dups
 setopt hist_ignore_space
 
