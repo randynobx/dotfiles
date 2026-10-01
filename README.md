@@ -45,6 +45,12 @@ and function with its description, generated from the comments in these files.
 Per-machine or private settings go in `~/.zshrc.local`, which is loaded last
 and not tracked.
 
+## Homebrew
+
+`Brewfile` lists the CLI tools and apps for a new Mac. Install them with
+`brew bundle --file=Brewfile` (run `install.sh` afterwards, or before; order
+doesn't matter).
+
 ## Dependencies
 
 [fzf](https://github.com/junegunn/fzf), [ripgrep](https://github.com/BurntSushi/ripgrep),
