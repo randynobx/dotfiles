@@ -31,6 +31,19 @@ The script symlinks each file listed in `links` into place (backing up anything 
 `*.bak.<timestamp>`) and clones vim plugins into `vim/pack/`. Re-run it to
 update plugins.
 
+## Releases
+
+Lab hosts don't follow `main`. The infra repo's Ansible deploys the `production`
+branch, which moves only when promoted:
+
+```sh
+make pending     # commits on main not yet in production
+make release     # production := origin/main (fast-forward only)
+```
+
+`make release REF=<sha>` promotes an earlier pushed commit. To roll back:
+`git push --force origin <sha>:production`. Either way, `make run` in infra deploys it.
+
 ## zsh layout
 
 `zshrc` only loads `zsh/*.zsh` in filename order:
