@@ -37,6 +37,9 @@ update plugins.
 | `60-functions.zsh` | shell functions |
 | `70-tools.zsh` | optional tool integrations (navi), each skipped if not installed |
 
+Run `cheat` (or `cheat <word>` to filter) for a list of every alias, git alias
+and function with its description, generated from the comments in these files.
+
 Per-machine or private settings go in `~/.zshrc.local`, which is loaded last
 and not tracked.
 
