@@ -17,6 +17,16 @@ Ansible role both read. To add a dotfile, add one line there.
 | `ranger/` | `~/.config/ranger` |
 | `ghostty/` | `~/.config/ghostty` |
 
+## Bootstrap
+
+On a blank Mac, `bootstrap.sh` installs Homebrew and Bitwarden, generates this machine's
+SSH key, clones this repo, runs `install.sh` and the Brewfile, sets the hostname and
+firewall, and turns on commit signing. It pauses once for the GitHub key. Safe to re-run.
+
+```sh
+bash <(curl -fsSL https://raw.githubusercontent.com/randynobx/dotfiles/main/bootstrap.sh)
+```
+
 ## Install
 
 ```sh
