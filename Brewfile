@@ -32,8 +32,6 @@ cask "docker-desktop"
 cask "firefox"
 # Terminal emulator that uses platform-native UI and GPU acceleration
 cask "ghostty"
-# Audio mixer controller
-cask "mixing-station"
 # Markdown notes; the infra repo's docs/ is a vault
 cask "obsidian"
 # Music streaming service
