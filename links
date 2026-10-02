@@ -15,3 +15,4 @@ gitignore_global   .config/git/ignore    core
 
 ranger             .config/ranger        desktop
 ghostty            .config/ghostty       desktop
+ssh/config         .ssh/config           desktop
