@@ -1,6 +1,8 @@
 # 20-env.zsh - environment variables and PATH (before anything checks $commands)
 
 export PATH="$PATH:$HOME/bin"
+typeset -U path               # no duplicates
+path=($HOME/.local/bin $path) # pipx, Claude Code; first, so pipx Ansible beats any system copy
 
 if [[ $OSTYPE == darwin* ]]; then
     if (( $+commands[mate] )); then
