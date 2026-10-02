@@ -12,8 +12,12 @@ brew "nmap"
 brew "ranger"
 # Search tool like grep and The Silver Searcher
 brew "ripgrep"
+# Static analysis for shell scripts (infra's make check uses it)
+brew "shellcheck"
 # Terminal multiplexer
 brew "tmux"
+# Directory listing as a tree
+brew "tree"
 # Desktop password and login vault
 cask "bitwarden"
 # Web browser focusing on privacy
@@ -30,6 +34,8 @@ cask "firefox"
 cask "ghostty"
 # Audio mixer controller
 cask "mixing-station"
+# Markdown notes; the infra repo's docs/ is a vault
+cask "obsidian"
 # Music streaming service
 cask "spotify"
 # General-purpose text editor
