@@ -3,9 +3,17 @@
 # zsh knows these take no screen width, so no %{ %} wrappers needed.
 
 MAIN_COLOR='%B%F{8}'    # bright black (Zenburn grey-green)
-HOST_COLOR='%B%F{6}'    # cyan
 DIR_COLOR='%b%F{7}'     # light grey, not bold
 RESET_COLOR='%b%f'
+
+# host color by class, from the name prefix (macOS counts as a workstation until renamed ws-*)
+if [[ $HOST == ws-* || $OSTYPE == darwin* ]]; then
+    HOST_COLOR='%B%F{4}'   # blue: workstation
+elif [[ $HOST == mgmt-* ]]; then
+    HOST_COLOR='%B%F{3}'   # yellow: management
+else
+    HOST_COLOR='%B%F{1}'   # red: servers
+fi
 
 case $USER in
     randy) USER_COLOR='%B%F{2}' ;;   # green for randy
