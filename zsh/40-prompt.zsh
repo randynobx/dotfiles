@@ -8,11 +8,11 @@ RESET_COLOR='%b%f'
 
 # host color by class, from the name prefix (macOS counts as a workstation until renamed ws-*)
 if [[ $HOST == ws-* || $OSTYPE == darwin* ]]; then
-    HOST_COLOR='%B%F{4}'   # blue: workstation
+    HOST_COLOR='%B%F{12}'   # bright blue: workstation
 elif [[ $HOST == mgmt-* ]]; then
-    HOST_COLOR='%B%F{3}'   # yellow: management
+    HOST_COLOR='%B%F{11}'   # bright yellow: management
 else
-    HOST_COLOR='%B%F{1}'   # red: servers
+    HOST_COLOR='%B%F{9}'   # bright red: servers
 fi
 
 case $USER in
