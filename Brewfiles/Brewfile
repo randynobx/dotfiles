@@ -18,6 +18,7 @@ cask "claude"           # Claude desktop app
 cask "firefox"          # browser
 cask "ghostty"          # terminal emulator
 cask "obsidian"         # notes
+cask "proton-mail"      # Proton mamil app
 cask "spotify"          # music
 cask "tailscale-app"    # Tailscale menu-bar app (the lab's network)
 cask "textmate"         # text editor
