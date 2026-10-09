@@ -1,0 +1,10 @@
+# Developer and lab-admin tools.
+# Run with: brew bundle --file=~/Projects/dotfiles/Brewfiles/Brewfile.dev
+# bootstrap.sh --brew dev. Install on machines that do lab work. ws-mouse (audio) skips this file.
+
+brew "nmap"          # network scanner
+brew "pipx"          # install Python CLI apps in isolated envs
+brew "shellcheck"    # shell script linter
+
+cask "docker-desktop"  # containers
+cask "utm"             # virtual machines

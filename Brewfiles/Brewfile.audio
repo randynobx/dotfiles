@@ -1,0 +1,10 @@
+# Audio tools: live sound and recording.
+# Run with: brew bundle --file=~/Projects/dotfiles/Brewfiles/Brewfile.audio
+# bootstrap.sh --brew audio. This is what ws-mouse installs.
+
+cask "mixing-station"   # mixer control software
+
+mas "GarageBand", id: 682658836    # recording and basic production
+mas "Logic Pro", id: 634148309     # DAW for recording and production
+mas "MainStage", id: 6746637089    # live performance rig
+mas "X-AIR-Edit", id: 6754191950   # Behringer X-AIR mixer control

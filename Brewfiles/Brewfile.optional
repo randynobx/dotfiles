@@ -1,0 +1,12 @@
+# Optional apps: pre-vetted, but NOT part of any install.
+# This file is a catalog. Do not run `brew bundle` on it; bootstrap.sh refuses it.
+# To install one app, copy its line into a temp file and run:
+#   brew bundle --file=/tmp/one-app.Brewfile
+
+cask "caskhub"   # GUI for browsing and managing Homebrew packages
+
+mas "Kiwix", id: 997079563          # offline reader for Wikipedia and similar sites
+mas "Pixelmator Pro", id: 1289583905  # image editing (verify it's the one-time-purchase listing)
+
+# Copilot Money: personal finance, subscription
+mas "Copilot", id: 1447330651

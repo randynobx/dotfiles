@@ -1,0 +1,28 @@
+# Base Brewfile: installed on every Mac.
+# Run with: brew bundle --file=~/Projects/dotfiles/Brewfiles/Brewfile
+# Optional apps live in Brewfile.optional (catalog, not run by bootstrap).
+
+# --- Command-line tools ---
+brew "fzf"        # fuzzy finder
+brew "git"        # version control
+brew "mas"        # Mac App Store CLI (used by the mas entries below)
+brew "ranger"     # terminal file manager
+brew "ripgrep"    # fast recursive search
+brew "tmux"       # terminal multiplexer
+brew "tree"       # directory listing as a tree
+
+# --- Apps ---
+cask "bitwarden"        # password vault
+cask "brave-browser"    # browser
+cask "claude"           # Claude desktop app
+cask "firefox"          # browser
+cask "ghostty"          # terminal emulator
+cask "obsidian"         # notes
+cask "spotify"          # music
+cask "tailscale-app"    # Tailscale menu-bar app (the lab's network)
+cask "textmate"         # text editor
+
+# --- Mac App Store ---
+mas "Amphetamine", id: 937984704   # keep the Mac awake
+mas "DiskSight", id: 1485505524    # disk usage
+mas "MKPlayer", id: 1335612105     # media player

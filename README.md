@@ -20,12 +20,17 @@ Ansible role both read. To add a dotfile, add one line there.
 ## Bootstrap
 
 On a blank Mac, `bootstrap.sh` installs Homebrew and Bitwarden, generates this machine's
-SSH key, clones this repo, runs `install.sh` and the Brewfile, sets the hostname and
-firewall, and turns on commit signing. It pauses once for the GitHub key. Safe to re-run.
+SSH key, clones this repo, runs `install.sh`, sets the hostname and firewall, turns on
+commit signing, and installs the Brewfiles. It pauses for the GitHub key and for the App
+Store sign-in. Safe to re-run.
 
 ```sh
-bash <(curl -fsSL https://raw.githubusercontent.com/randynobx/dotfiles/main/bootstrap.sh)
+bash <(curl -fsSL https://raw.githubusercontent.com/randynobx/dotfiles/main/bootstrap.sh) [--brew <set>]... [ws-<name>]
 ```
+
+The base Brewfile is always installed. Each `--brew <set>` adds one more: `--brew dev` on a
+lab workstation, `--brew audio` on `ws-mouse`, `--brew dev --brew audio` for both. Pass the
+same flags on a re-run; without them only the base set is checked.
 
 ## Install
 
@@ -76,9 +81,17 @@ and not tracked.
 
 ## Homebrew
 
-`Brewfile` lists the CLI tools and apps for a new Mac. Install them with
-`brew bundle --file=Brewfile` (run `install.sh` afterwards, or before; order
-doesn't matter).
+`Brewfiles/` splits the CLI tools and apps for a new Mac into sets:
+
+| File | Contents | Installed by |
+|---|---|---|
+| `Brewfile` | base tools and apps, every Mac | `bootstrap.sh`, always |
+| `Brewfile.dev` | developer and lab-admin tools | `bootstrap.sh --brew dev` |
+| `Brewfile.audio` | live sound and recording | `bootstrap.sh --brew audio` |
+| `Brewfile.optional` | catalog of vetted extras | nothing; copy single lines out |
+
+By hand: `brew bundle --file=Brewfiles/Brewfile.dev`. The `mas` lines need the App Store
+app signed in, and install only apps the Apple ID already owns.
 
 ## Dependencies
 

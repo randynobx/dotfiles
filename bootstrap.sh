@@ -3,14 +3,37 @@
 # Safe to re-run: every step checks first and prints "ok" when there is nothing to do.
 # Steps and order come from infra's docs/runbooks/workstation-setup.md.
 #
-# usage: bash <(curl -fsSL https://raw.githubusercontent.com/randynobx/dotfiles/main/bootstrap.sh) [ws-<name>]
+# usage: bash <(curl -fsSL https://raw.githubusercontent.com/randynobx/dotfiles/main/bootstrap.sh) [--brew <set>]... [ws-<name>]
+#   --brew <set>   also install Brewfiles/Brewfile.<set> (dev, audio); repeat for more than one.
+#                  Brewfiles/Brewfile is always installed.
 # Runs under macOS's /bin/bash 3.2, and not from a clone: nothing here may rely on
 # BASH_SOURCE or on bash 4 features.
 set -euo pipefail
 
 die() { echo "error: $*" >&2; exit 1; }
 
-[[ $# -le 1 ]] || die "usage: bootstrap.sh [ws-<name>]"
+usage() { die "usage: bootstrap.sh [--brew <set>]... [ws-<name>]"; }
+
+NAME=""
+BREWFILES=(Brewfile)
+set_re='^[a-z0-9]+$'
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        --brew)
+            [[ $# -ge 2 ]] || usage
+            [[ $2 =~ $set_re ]] || die "bad Brewfile set '$2'"
+            [[ $2 != optional ]] || die "Brewfile.optional is a catalog, not a set"
+            [[ " ${BREWFILES[*]} " == *" Brewfile.$2 "* ]] || BREWFILES+=("Brewfile.$2")
+            shift 2
+            ;;
+        -*) usage ;;
+        *)
+            [[ -z $NAME ]] || usage
+            NAME="$1"
+            shift
+            ;;
+    esac
+done
 [[ "$(uname -s)" == Darwin ]] || die "macOS only"
 [[ "$(id -u)" -ne 0 ]] || die "run as yourself, not root (Homebrew refuses root)"
 
@@ -22,7 +45,6 @@ FIREWALL=/usr/libexec/ApplicationFirewall/socketfilterfw
 name_of() { scutil --get "$1" 2>/dev/null || true; }
 
 # Asked for now, set later: the key comment needs the name before the hostname step runs.
-NAME="${1:-}"
 if [[ -z $NAME ]]; then
     NAME="$(name_of LocalHostName)"
     if [[ $NAME != ws-* || "$(name_of ComputerName)" != "$NAME" || "$(name_of HostName)" != "$NAME" ]]; then
@@ -121,17 +143,16 @@ else
     git clone git@github.com:randynobx/dotfiles.git "$DOTFILES"
 fi
 
+# An existing clone is not pulled, so it may predate Brewfiles/ or the set asked for.
+for f in "${BREWFILES[@]}"; do
+    [[ -f $DOTFILES/Brewfiles/$f ]] ||
+        die "no Brewfiles/$f in $DOTFILES: check the set name, or git -C $DOTFILES pull"
+done
+
 # 7. Link them (prints its own ok lines)
 "$DOTFILES/install.sh"
 
-# 8. Brewfile
-if brew bundle check --file="$DOTFILES/Brewfile" >/dev/null 2>&1; then
-    echo "ok      Brewfile"
-else
-    brew bundle --file="$DOTFILES/Brewfile"
-fi
-
-# 9. Hostname and firewall
+# 8. Hostname and firewall
 if [[ "$(name_of ComputerName)" == "$NAME" && "$(name_of HostName)" == "$NAME" && "$(name_of LocalHostName)" == "$NAME" ]]; then
     echo "ok      hostname $NAME"
 else
@@ -147,8 +168,8 @@ else
     sudo "$FIREWALL" --setglobalstate on
 fi
 
-# 10. Commit signing with this machine's key. After install.sh: it links the gitconfig that
-#     sets user.email and includes ~/.gitconfig.local.
+# 9. Commit signing with this machine's key. After install.sh: it links the gitconfig that
+#    sets user.email and includes ~/.gitconfig.local.
 if [[ -e $HOME/.gitconfig.local ]]; then
     echo "ok      ~/.gitconfig.local"
 else
@@ -176,6 +197,20 @@ else
     echo "added   this key to ~/.ssh/allowed_signers"
 fi
 
+# 10. Brewfiles, last: a failed app install must not block the steps above.
+failed=""
+for f in "${BREWFILES[@]}"; do
+    if brew bundle check --file="$DOTFILES/Brewfiles/$f" >/dev/null 2>&1; then
+        echo "ok      $f"
+        continue
+    fi
+    # mas cannot sign in, and installs only apps this Apple ID already owns.
+    if grep -q '^mas ' "$DOTFILES/Brewfiles/$f"; then
+        read -r -p "$f has App Store apps. Sign in to the App Store app, then press Enter: " _
+    fi
+    brew bundle --file="$DOTFILES/Brewfiles/$f" || failed="$failed $f"
+done
+
 # 11. What is left needs a human
 cat <<'EOF'
 
@@ -186,3 +221,4 @@ Done. Still by hand, from infra's docs/runbooks/workstation-setup.md:
   Phase 6  a test commit shows Verified on GitHub
 Lab admin only: Phase 2 step 4 (authorise the key on the lab), then Phases 4 and 5.
 EOF
+[[ -z $failed ]] || die "brew bundle failed for:$failed - fix and re-run"
