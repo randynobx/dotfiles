@@ -12,6 +12,7 @@ vim                .vim                  core
 tmux.conf          .tmux.conf            core
 gitconfig          .gitconfig            core
 gitignore_global   .config/git/ignore    core
+gitconfig-github   .config/git/github    core
 
 ranger             .config/ranger        desktop
 ghostty            .config/ghostty       desktop

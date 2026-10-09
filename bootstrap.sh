@@ -168,8 +168,9 @@ else
     sudo "$FIREWALL" --setglobalstate on
 fi
 
-# 9. Commit signing with this machine's key. After install.sh: it links the gitconfig that
-#    sets user.email and includes ~/.gitconfig.local.
+# 9. Commit signing with this machine's key, and the default commit email. After install.sh:
+#    it links the gitconfig that includes ~/.gitconfig.local. The email is asked for here
+#    because it is kept out of this repo.
 if [[ -e $HOME/.gitconfig.local ]]; then
     echo "ok      ~/.gitconfig.local"
 else
@@ -187,8 +188,15 @@ else
 EOF
     echo "wrote   ~/.gitconfig.local"
 fi
-email="$(git config user.email || true)"
-[[ -n $email ]] || die "git user.email is not set: ~/.gitconfig should be linked by install.sh"
+email="$(git config -f "$HOME/.gitconfig.local" user.email || true)"
+if [[ -n $email ]]; then
+    echo "ok      git email $email"
+else
+    read -r -p "default git commit email (github.com repos use the noreply address): " email
+    [[ -n $email ]] || die "no email given"
+    git config -f "$HOME/.gitconfig.local" user.email "$email"
+    echo "set     git email $email"
+fi
 signer="$email namespaces=\"git\" $(cat "$KEY.pub")"
 if [[ -f $HOME/.ssh/allowed_signers ]] && grep -qxF "$signer" "$HOME/.ssh/allowed_signers"; then
     echo "ok      ~/.ssh/allowed_signers"

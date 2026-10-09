@@ -13,6 +13,7 @@ Ansible role both read. To add a dotfile, add one line there.
 | `vimrc`, `vim/` | `~/.vimrc`, `~/.vim` |
 | `tmux.conf` | `~/.tmux.conf` (tmux ≥ 3.2) |
 | `gitconfig` | `~/.gitconfig` |
+| `gitconfig-github` | `~/.config/git/github` (commit email for repos with a github.com remote) |
 | `gitignore_global` | `~/.config/git/ignore` (ignored in every repo) |
 | `ranger/` | `~/.config/ranger` |
 | `ghostty/` | `~/.config/ghostty` |
@@ -45,6 +46,14 @@ plugins, which is what servers get.
 The script symlinks each file listed in `links` into place (backing up anything already there to
 `*.bak.<timestamp>`) and clones vim plugins into `vim/pack/`. Re-run it to
 update plugins.
+
+The default commit email is not in this repo. Each machine sets it in `~/.gitconfig.local`
+(`bootstrap.sh` asks for it; Ansible writes it on lab hosts), and until it does, git
+refuses to commit outside GitHub-hosted repos:
+
+```sh
+git config -f ~/.gitconfig.local user.email <address>
+```
 
 ## Releases
 

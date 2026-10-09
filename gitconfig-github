@@ -1,0 +1,4 @@
+# ~/.config/git/github - identity for repos hosted on github.com (included by gitconfig)
+
+[user]
+    email = 723673+randynobx@users.noreply.github.com

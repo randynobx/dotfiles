@@ -2,7 +2,7 @@
 
 [user]
     name = Randy Nance
-    email = randynobx@gmail.com
+    useConfigOnly = true        # no email configured: refuse to commit, never guess user@host
 
 [init]
     defaultBranch = main        # new repos start on main, not master
@@ -33,6 +33,15 @@
     amend = commit --amend --no-edit        # fold staged changes into last commit
     branches = branch -vv --sort=-committerdate   # branches, most recent first
 
-# Per-machine settings (signing key), untracked. Last, so it overrides; missing is fine.
+# Per-machine settings (default email, signing key), untracked. Overrides the above.
 [include]
     path = ~/.gitconfig.local
+
+# Repos with a github.com remote commit as the GitHub noreply address.
+# After .gitconfig.local, so it overrides the default email set there.
+[includeIf "hasconfig:remote.*.url:https://github.com/**"]
+    path = ~/.config/git/github
+[includeIf "hasconfig:remote.*.url:git@github.com:*/**"]
+    path = ~/.config/git/github
+[includeIf "hasconfig:remote.*.url:ssh://git@github.com/**"]
+    path = ~/.config/git/github
